@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="周学聪 Xuecong Zhou 的个人网站：AI systems, visual-language models, robotics, software engineering, cloud and mobile applications."
+    />
+    <meta name="theme-color" content="#f7f8f4" />
+    <title>周学聪 Xuecong Zhou | AI Systems & Software Engineering</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="回到首页">
+        <span class="brand-mark">XZ</span>
+        <span>周学聪</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">打开导航</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="主导航">
+        <a href="#research">研究</a>
+        <a href="#projects">项目</a>
+        <a href="#experience">经历</a>
+        <a href="#skills">技能</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <p class="eyebrow">Georgia Tech ECE · ML@GT · Essa Lab</p>
+          <h1 id="hero-title">周学聪<br /><span>Xuecong<br />Zhou</span></h1>
+          <p class="hero-copy">
+            电子与计算机工程硕士，聚焦视觉语言模型可靠性、机器人视觉伺服、后端系统与云端应用。
+            正在围绕图像描述幻觉、In-The-Wild 泛化和鲁棒训练构建研究与工程原型。
+          </p>
+          <div class="hero-actions" aria-label="联系方式">
+            <a class="button primary" href="mailto:xzhou455@gatech.edu">Email</a>
+            <a
+              class="button secondary"
+              href="https://www.linkedin.com/in/Xuecong-Zhou-555709260"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn
+            </a>
+          </div>
+          <dl class="signal-grid" aria-label="个人亮点">
+            <div>
+              <dt>Research</dt>
+              <dd>LLM/VLM Hallucination</dd>
+            </div>
+            <div>
+              <dt>Build</dt>
+              <dd>Flutter · Spring · AWS</dd>
+            </div>
+            <div>
+              <dt>Systems</dt>
+              <dd>Docker · Kafka · Redis</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="section overview" aria-labelledby="overview-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="eyebrow">Profile</p>
+            <h2 id="overview-title">从模型可靠性到完整产品交付</h2>
+          </div>
+          <div class="overview-grid">
+            <article>
+              <h3>AI Research</h3>
+              <p>
+                部署并比较 BLIP2、GLIP、GLIP2、LLaVA-Next、ContextDET 等模型，围绕视觉语言模型的目标误分类、
+                伪 GT 生成和鲁棒微调开展实验。
+              </p>
+            </article>
+            <article>
+              <h3>Applied Software</h3>
+              <p>
+                使用 Spring Boot、JPA、MyBatis、JWT、Redis、Kafka、WebSocket 和 Docker/Kubernetes 构建后端服务与实时系统。
+              </p>
+            </article>
+            <article>
+              <h3>Product Mindset</h3>
+              <p>
+                能从 Figma、BMC 和用户流程出发，完成 Flutter/Firebase 跨平台应用、Vue/Nuxt 教育平台和数据可视化面板。
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section research" id="research" aria-labelledby="research-title">
+        <div class="section-inner two-column">
+          <div class="section-heading sticky-heading">
+            <p class="eyebrow">Research</p>
+            <h2 id="research-title">视觉语言模型与鲁棒感知</h2>
+            <p>
+              当前研究关注减少 LLM/VLM 在图像描述中的幻觉现象，并用更可靠的目标识别与上下文建模改善开放场景泛化。
+            </p>
+          </div>
+          <div class="timeline">
+            <article class="timeline-item">
+              <div class="timeline-meta">
+                <span>2025.01 - Present</span>
+                <span>Atlanta, GA</span>
+              </div>
+              <h3>Research Assistant · Georgia Tech ML@GT, Essa Lab</h3>
+              <p class="muted">Advisor: Irfan Essa, Nikolai Warner</p>
+              <ul>
+                <li>部署 Something-Something、CODE Bench、HICO-DET 数据集，并实现多模型图像描述演示。</li>
+                <li>使用 BLIP2+GLIP 级联、ContextDET 与 LLaVA 作为基准模型，比较图像描述与目标检测结果。</li>
+                <li>基于自建 augmented HICO-DET 数据集，使用 LoRA 对 LLaVA 进行微调。</li>
+                <li>规划伪 GT 生成、目标误分类评估、混杂/降质数据鲁棒训练与最终模型评估。</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section projects" id="projects" aria-labelledby="projects-title">
+        <div class="section-inner">
+          <div class="section-heading compact">
+            <p class="eyebrow">Projects</p>
+            <h2 id="projects-title">项目经验</h2>
+          </div>
+          <div class="project-grid">
+            <article class="project-card featured">
+              <div class="card-topline">
+                <span>2025.04</span>
+                <span>AI for Social Impact</span>
+              </div>
+              <h3>VisionRL-KUKA 视觉伺服平台</h3>
+              <p>
+                在 PyBullet 中使用 PPO 强化学习构建 KUKA 机械臂视觉伺服系统，设计 CNN 感知与六自由度动作空间的自定义 Gym 环境。
+              </p>
+              <ul class="tag-list" aria-label="技术标签">
+                <li>PyBullet</li>
+                <li>PPO</li>
+                <li>CNN</li>
+                <li>Gym</li>
+              </ul>
+            </article>
+
+            <article class="project-card">
+              <div class="card-topline">
+                <span>2024.09 - 2024.12</span>
+                <span>Mobile Apps</span>
+              </div>
+              <h3>GT-Social</h3>
+              <p>
+                使用 Flutter 与 Firebase 开发跨平台校园社交应用，负责首页 UI/UX、事件排序功能与从 Figma 到实现的产品流程。
+              </p>
+              <ul class="tag-list" aria-label="技术标签">
+                <li>Flutter</li>
+                <li>Firebase</li>
+                <li>Figma</li>
+              </ul>
+            </article>
+
+            <article class="project-card">
+              <div class="card-topline">
+                <span>2024.10 - 2024.12</span>
+                <span>Conversational AI</span>
+              </div>
+              <h3>会话式人工智能最终项目</h3>
+              <p>
+                基于 Llama-3 微调生成患者对话，使用 BERTScore、BLEU 等方法评估候选模型，并辅助选择最佳模型。
+              </p>
+              <ul class="tag-list" aria-label="技术标签">
+                <li>Llama-3</li>
+                <li>BERTScore</li>
+                <li>BLEU</li>
+              </ul>
+            </article>
+
+            <article class="project-card">
+              <div class="card-topline">
+                <span>2023.12</span>
+                <span>Statistical ML</span>
+              </div>
+              <h3>比特币价格预测</h3>
+              <p>
+                使用 LSTM 预测比特币价格走势，并与 RNN、GRU 和混合模型比较，探索加密货币与智能合约相关知识。
+              </p>
+              <ul class="tag-list" aria-label="技术标签">
+                <li>LSTM</li>
+                <li>RNN</li>
+                <li>GRU</li>
+              </ul>
+            </article>
+
+            <article class="project-card">
+              <div class="card-topline">
+                <span>2023.05</span>
+                <span>Cloud Computing</span>
+              </div>
+              <h3>AWS 云计算项目</h3>
+              <p>
+                使用 S3、Cloud9、Lambda、DynamoDB 构建文件夹使用情况统计网页，并通过触发器自动入库与可视化。
+              </p>
+              <ul class="tag-list" aria-label="技术标签">
+                <li>AWS S3</li>
+                <li>Lambda</li>
+                <li>DynamoDB</li>
+              </ul>
+            </article>
+
+            <article class="project-card">
+              <div class="card-topline">
+                <span>2023.01 - 2023.06</span>
+                <span>Graduation Design</span>
+              </div>
+              <h3>在线教育视频平台</h3>
+              <p>
+                使用 SSM 与 Vue 开发在线教育平台，集成 Redis SSO、Nacos 服务发现、Nuxt、ECharts 与后台数据分析面板。
+              </p>
+              <ul class="tag-list" aria-label="技术标签">
+                <li>Vue</li>
+                <li>Redis</li>
+                <li>Nacos</li>
+                <li>ECharts</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section experience" id="experience" aria-labelledby="experience-title">
+        <div class="section-inner two-column">
+          <div class="section-heading sticky-heading">
+            <p class="eyebrow">Experience</p>
+            <h2 id="experience-title">工程与实习经历</h2>
+          </div>
+          <div class="stack">
+            <article class="experience-item">
+              <div class="timeline-meta">
+                <span>2022.05 - 2022.07</span>
+                <span>Suzhou, China</span>
+              </div>
+              <h3>ERP 软件实习生 · 上海佳格食品有限公司苏州分公司</h3>
+              <p>
+                维护公司网络与服务器，参与系统更新、性能监控、安全配置、ERP 配置、数据迁移和技术文档编写，支持跨职能团队完成部署。
+              </p>
+            </article>
+            <article class="experience-item">
+              <div class="timeline-meta">
+                <span>2022.01 - 2022.02</span>
+                <span>Suzhou, China</span>
+              </div>
+              <h3>软件实习生 · 苏州茵凡科技</h3>
+              <p>
+                使用 Selenium WebDriver 与 TestNG 管理自动化测试；使用 Spring Boot、MyBatis、Spring Security 与 JWT 开发生产订单管理 API。
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section skills" id="skills" aria-labelledby="skills-title">
+        <div class="section-inner">
+          <div class="section-heading compact">
+            <p class="eyebrow">Skills</p>
+            <h2 id="skills-title">技术栈</h2>
+          </div>
+          <div class="skills-grid">
+            <article>
+              <h3>AI / ML</h3>
+              <p>LoRA, LLaVA, BLIP2, GLIP, ContextDET, Hugging Face, LSTM, PPO, PyBullet</p>
+            </article>
+            <article>
+              <h3>Backend / Systems</h3>
+              <p>Java, Spring Boot, SSM, MyBatis, JPA, Spring Security, JWT, Redis, Kafka, WebSocket, 多线程</p>
+            </article>
+            <article>
+              <h3>Cloud / Data</h3>
+              <p>AWS S3, Cloud9, Lambda, DynamoDB, Docker, Kubernetes, MySQL, ERD, OpenMPI</p>
+            </article>
+            <article>
+              <h3>Frontend / Product</h3>
+              <p>Vue, Nuxt, Angular.js, Flutter, Firebase, Ionic, ECharts, Axure, Figma</p>
+            </article>
+            <article>
+              <h3>Workflow</h3>
+              <p>Jira, Confluence, Git, RESTful API, Microservices, Data Visualization</p>
+            </article>
+            <article>
+              <h3>Security / Reverse</h3>
+              <p>Ghidra 反编译，服务器安全配置，系统监控与故障排查</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section education" aria-labelledby="education-title">
+        <div class="section-inner two-column">
+          <div class="section-heading sticky-heading">
+            <p class="eyebrow">Education</p>
+            <h2 id="education-title">教育背景</h2>
+          </div>
+          <div class="stack">
+            <article class="education-item">
+              <div class="timeline-meta">
+                <span>2023.08 - 2025.05</span>
+                <span>Atlanta, GA</span>
+              </div>
+              <h3>Georgia Institute of Technology</h3>
+              <p>电子与计算机工程理学硕士，方向：计算机系统与软件。</p>
+            </article>
+            <article class="education-item">
+              <div class="timeline-meta">
+                <span>2019.09 - 2023.06</span>
+                <span>Guangxi, China</span>
+              </div>
+              <h3>广西科技大学 & 南十字星大学</h3>
+              <p>软件工程 & 信息技术 学士。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section awards" aria-labelledby="awards-title">
+        <div class="section-inner">
+          <div class="section-heading compact">
+            <p class="eyebrow">Awards</p>
+            <h2 id="awards-title">奖项、论文与专利</h2>
+          </div>
+          <div class="award-grid">
+            <article>
+              <h3>学术与竞赛</h3>
+              <ul>
+                <li>2022 广西大学生人工智能设计大赛一等奖</li>
+                <li>合作撰写 Scopus 与 IEEE 索引论文</li>
+                <li>2020 大学三好学生、校级奖学金</li>
+              </ul>
+            </article>
+            <article>
+              <h3>体育与社团</h3>
+              <ul>
+                <li>2019、2021 广西科技大学优秀运动员</li>
+                <li>2021 自治区级优秀运动员</li>
+                <li>校田径 400m 冠军、200m 亚军</li>
+              </ul>
+            </article>
+            <article>
+              <h3>专利</h3>
+              <p>实用新型专利：一种计算机机箱，专利号 ZL 2019 2 1204308.2。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="contact-inner">
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">让研究原型变成可靠系统</h2>
+          <p>
+            欢迎围绕视觉语言模型、AI 工程、后端系统、移动应用或云端部署联系我。
+          </p>
+          <div class="contact-list" aria-label="联系方式">
+            <a href="mailto:xzhou455@gatech.edu">xzhou455@gatech.edu</a>
+            <a href="tel:+14708367430">+1 470 836 7430</a>
+            <a href="tel:+8615878296782">+86 158 7829 6782</a>
+            <a
+              href="https://www.linkedin.com/in/Xuecong-Zhou-555709260"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span data-year></span> Xuecong Zhou. Built as a static portfolio for Vercel.</p>
+    </footer>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>
