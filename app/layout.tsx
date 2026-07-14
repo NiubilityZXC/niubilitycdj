@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "周学聪 Xuecong Zhou | AI Systems & Software Engineering",
+  title: "周学聪 Xuecong Zhou | AI 系统与软件工程",
   description:
-    "周学聪 Xuecong Zhou 的个人网站：AI systems, visual-language models, robotics, software engineering, cloud and mobile applications.",
+    "周学聪 Xuecong Zhou 的个人网站：视觉语言模型、机器人学习、软件工程、云端与移动应用。",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
