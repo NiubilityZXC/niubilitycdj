@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   description:
     "周学聪 Xuecong Zhou 的个人网站：视觉语言模型、机器人学习、软件工程、云端与移动应用。",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/site/favicon.svg",
+    shortcut: "/site/favicon.svg",
   },
 };
 

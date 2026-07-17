@@ -20,6 +20,7 @@ const dataUrl = (mimeType, ...parts) => {
 const manropeFont = dataUrl("font/woff2", "assets", "fonts", "manrope-latin-wght-normal.woff2");
 const phosphorFont = dataUrl("font/woff2", "assets", "vendor", "phosphor", "Phosphor.woff2");
 const systemsVisual = dataUrl("image/png", "assets", "systems-visual.png");
+const coastHero = dataUrl("image/webp", "assets", "coast-hero.webp");
 const favicon = dataUrl("image/svg+xml", "favicon.svg");
 
 let mainCss = readText("styles.css").replace(
@@ -55,12 +56,13 @@ replaceOnce(
   "Phosphor stylesheet",
 );
 replaceOnce(
-  '<link rel="stylesheet" href="./styles.css" />',
+  '<link rel="stylesheet" href="./styles.css?v=20260717" />',
   `<style>\n${escapeStyle(phosphorCss)}\n${escapeStyle(mainCss)}\n</style>`,
   "main stylesheet",
 );
 
 html = html.replaceAll("./assets/systems-visual.png", systemsVisual);
+html = html.replaceAll("./assets/coast-hero.webp", coastHero);
 
 replaceOnce(
   '<script src="./assets/vendor/gsap/gsap.min.js"></script>',
@@ -73,7 +75,7 @@ replaceOnce(
   "ScrollTrigger script",
 );
 replaceOnce(
-  '<script src="./script.js" defer></script>',
+  '<script src="./script.js?v=20260717" defer></script>',
   `<script>${escapeScript(readText("script.js"))}</script>`,
   "site script",
 );
