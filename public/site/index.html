@@ -18,7 +18,7 @@
     <title>周学聪 Xuecong Zhou | AI 系统与软件工程</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./assets/vendor/phosphor/style.css" />
-    <link rel="stylesheet" href="./styles.css?v=20260720" />
+    <link rel="stylesheet" href="./styles.css?v=20260720b" />
   </head>
   <body class="is-loading">
     <noscript><style>.intro{display:none}.is-loading{overflow:auto}</style></noscript>
@@ -53,17 +53,23 @@
         <a href="#projects">项目</a>
         <a href="#experience">经历</a>
         <a href="#contact">联系</a>
+        <a class="nav-download" href="./xuecong-zhou-cv-cn.pdf" download="周学聪-中文简历.pdf">简历 PDF</a>
       </nav>
 
-      <a class="header-contact magnetic" href="mailto:xzhou455@gatech.edu">
-        <span>发邮件</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+      <a class="header-contact magnetic" href="./xuecong-zhou-cv-cn.pdf" download="周学聪-中文简历.pdf">
+        <span>下载简历</span><i class="ph ph-download-simple" aria-hidden="true"></i>
       </a>
     </header>
 
     <main id="main-content">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-scene" aria-hidden="true">
-          <img src="./assets/coast-hero.webp" alt="" fetchpriority="high" />
+          <div class="hero-image-drift">
+            <img src="./assets/coast-hero.webp" alt="" fetchpriority="high" />
+          </div>
+          <div class="ocean-light">
+            <span></span><span></span><span></span>
+          </div>
           <canvas class="tide-canvas"></canvas>
           <div class="hero-shade"></div>
         </div>
@@ -82,9 +88,12 @@
         </div>
 
         <div class="hero-bottom">
-          <p class="hero-summary reveal-item">
-            喜欢研究交易的 vibe coding 重度用户
-          </p>
+          <div class="hero-intro reveal-item">
+            <p class="hero-summary">喜欢研究交易的 vibe coding 重度用户</p>
+            <a class="hero-resume magnetic" href="./xuecong-zhou-cv-cn.pdf" download="周学聪-中文简历.pdf">
+              <i class="ph ph-download-simple" aria-hidden="true"></i><span>下载中文简历 PDF</span>
+            </a>
+          </div>
           <div class="hero-coordinates reveal-item" aria-hidden="true">
             <span>33.7490° N</span>
             <span>84.3880° W</span>
@@ -330,7 +339,8 @@
           <h2 class="reveal-item" id="contact-title">一起把想法<br />做成系统。</h2>
           <p class="contact-copy reveal-item">期待围绕 AI 研究、机器人学习与软件工程展开交流。</p>
           <div class="contact-actions reveal-item">
-            <a class="contact-button magnetic" href="mailto:xzhou455@gatech.edu"><i class="ph ph-envelope"></i><span>xzhou455@gatech.edu</span></a>
+            <a class="contact-button magnetic" href="./xuecong-zhou-cv-cn.pdf" download="周学聪-中文简历.pdf"><i class="ph ph-download-simple"></i><span>下载中文简历 PDF</span></a>
+            <a class="contact-button contact-button-ghost magnetic" href="mailto:xzhou455@gatech.edu"><i class="ph ph-envelope"></i><span>xzhou455@gatech.edu</span></a>
             <a class="contact-button contact-button-ghost magnetic" href="https://www.linkedin.com/in/Xuecong-Zhou-555709260" target="_blank" rel="noreferrer"><i class="ph ph-linkedin-logo"></i><span>LinkedIn</span></a>
           </div>
         </div>
@@ -345,6 +355,6 @@
 
     <script src="./assets/vendor/gsap/gsap.min.js"></script>
     <script src="./assets/vendor/gsap/ScrollTrigger.min.js"></script>
-    <script src="./script.js?v=20260720" defer></script>
+    <script src="./script.js?v=20260720b" defer></script>
   </body>
 </html>

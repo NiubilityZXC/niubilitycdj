@@ -179,7 +179,7 @@
     let height = 0;
     let pointerX = 0.5;
     let pointerY = 0.5;
-    let elapsed = 0;
+    let frameId = 0;
 
     const resize = () => {
       const rect = hero.getBoundingClientRect();
@@ -193,40 +193,106 @@
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
     };
 
+    const waveY = (x, layer, time) => {
+      const baseline = height * (0.49 + layer * 0.072);
+      const distance = Math.abs(x / Math.max(width, 1) - pointerX);
+      const pointerInfluence = Math.max(0, 1 - distance * 3.4) * (pointerY - 0.5) * 20;
+      return baseline
+        + Math.sin(x * 0.011 + time * (0.72 + layer * 0.13)) * (5 + layer * 2.7)
+        + Math.sin(x * 0.0042 - time * (0.42 + layer * 0.035)) * (7 + layer * 1.25)
+        + pointerInfluence;
+    };
+
     hero.addEventListener("pointermove", (event) => {
       const rect = hero.getBoundingClientRect();
       pointerX = (event.clientX - rect.left) / rect.width;
       pointerY = (event.clientY - rect.top) / rect.height;
     }, { passive: true });
 
-    const draw = () => {
-      elapsed += 0.012;
-      context.clearRect(0, 0, width, height);
-      context.lineWidth = 1;
-      context.strokeStyle = "rgba(255, 255, 255, 0.34)";
+    hero.addEventListener("pointerleave", () => {
+      pointerX = 0.5;
+      pointerY = 0.5;
+    }, { passive: true });
 
-      for (let layer = 0; layer < 4; layer += 1) {
+    const draw = (timestamp) => {
+      const time = timestamp * 0.001;
+      context.clearRect(0, 0, width, height);
+
+      for (let layer = 0; layer < 6; layer += 1) {
         context.beginPath();
-        const baseline = height * (0.53 + layer * 0.075);
-        for (let x = -20; x <= width + 20; x += 12) {
-          const distance = Math.abs(x / width - pointerX);
-          const influence = Math.max(0, 1 - distance * 3.2) * (pointerY - 0.5) * 22;
-          const y = baseline
-            + Math.sin(x * 0.012 + elapsed * (1.1 + layer * 0.18)) * (6 + layer * 3)
-            + Math.sin(x * 0.004 - elapsed * 0.65) * 8
-            + influence;
-          if (x === -20) context.moveTo(x, y);
+        for (let x = -32; x <= width + 32; x += 8) {
+          const y = waveY(x, layer, time);
+          if (x === -32) context.moveTo(x, y);
           else context.lineTo(x, y);
         }
+
+        if (layer >= 2) {
+          context.lineTo(width + 32, height + 10);
+          context.lineTo(-32, height + 10);
+          context.closePath();
+          context.fillStyle = `rgba(21, 139, 158, ${0.016 + layer * 0.009})`;
+          context.fill();
+        }
+
+        context.beginPath();
+        for (let x = -32; x <= width + 32; x += 8) {
+          const y = waveY(x, layer, time);
+          if (x === -32) context.moveTo(x, y);
+          else context.lineTo(x, y);
+        }
+        context.lineWidth = 0.75 + layer * 0.2;
+        context.strokeStyle = `rgba(225, 252, 255, ${0.16 + layer * 0.045})`;
+        context.shadowColor = "rgba(126, 232, 240, 0.5)";
+        context.shadowBlur = layer > 2 ? 7 : 3;
         context.stroke();
       }
 
-      requestAnimationFrame(draw);
+      context.shadowBlur = 0;
+      for (let lane = 0; lane < 3; lane += 1) {
+        const layer = lane + 2;
+        const spacing = 150 - lane * 14;
+        const travel = (time * (24 + lane * 7)) % spacing;
+        for (let start = -spacing; start < width + spacing; start += spacing) {
+          const x = start + travel;
+          const y = waveY(x, layer, time) - 1;
+          const length = 24 + lane * 8 + Math.sin(time * 1.3 + start) * 7;
+          context.beginPath();
+          context.moveTo(x - length, y + 1);
+          context.quadraticCurveTo(x - length * 0.25, y - 5 - lane, x + length, y + 1);
+          context.lineWidth = 1.2 + lane * 0.35;
+          context.strokeStyle = `rgba(244, 255, 255, ${0.34 + lane * 0.11})`;
+          context.stroke();
+        }
+      }
+
+      const glintCount = Math.min(42, Math.max(18, Math.floor(width / 25)));
+      for (let index = 0; index < glintCount; index += 1) {
+        const x = ((index * 97 + time * (12 + (index % 4) * 4)) % (width + 80)) - 40;
+        const depth = (Math.sin(index * 12.37) + 1) / 2;
+        const y = height * (0.51 + depth * 0.42) + Math.sin(time * 1.4 + index) * 5;
+        const pulse = 0.18 + ((Math.sin(time * 2.2 + index * 1.7) + 1) / 2) * 0.4;
+        context.beginPath();
+        context.moveTo(x - 2, y);
+        context.lineTo(x + 8 + depth * 8, y);
+        context.lineWidth = 0.8 + depth;
+        context.strokeStyle = `rgba(239, 255, 255, ${pulse})`;
+        context.stroke();
+      }
+
+      frameId = requestAnimationFrame(draw);
     };
 
     resize();
     window.addEventListener("resize", resize, { passive: true });
-    draw();
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        cancelAnimationFrame(frameId);
+        frameId = 0;
+      } else if (!frameId) {
+        frameId = requestAnimationFrame(draw);
+      }
+    });
+    frameId = requestAnimationFrame(draw);
   };
 
   setupTideCanvas();

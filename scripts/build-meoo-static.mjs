@@ -56,13 +56,14 @@ replaceOnce(
   "Phosphor stylesheet",
 );
 replaceOnce(
-  '<link rel="stylesheet" href="./styles.css?v=20260720" />',
+  '<link rel="stylesheet" href="./styles.css?v=20260720b" />',
   `<style>\n${escapeStyle(phosphorCss)}\n${escapeStyle(mainCss)}\n</style>`,
   "main stylesheet",
 );
 
 html = html.replaceAll("./assets/systems-visual.png", systemsVisual);
 html = html.replaceAll("./assets/coast-hero.webp", coastHero);
+html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "https://niubilitycdj.vercel.app/xuecong-zhou-cv-cn.pdf");
 
 replaceOnce(
   '<script src="./assets/vendor/gsap/gsap.min.js"></script>',
@@ -75,7 +76,7 @@ replaceOnce(
   "ScrollTrigger script",
 );
 replaceOnce(
-  '<script src="./script.js?v=20260720" defer></script>',
+  '<script src="./script.js?v=20260720b" defer></script>',
   `<script>${escapeScript(readText("script.js"))}</script>`,
   "site script",
 );

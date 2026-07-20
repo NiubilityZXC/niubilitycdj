@@ -101,15 +101,33 @@ a {
 }
 
 .detail-brand strong,
-.detail-back {
+.detail-back,
+.detail-resume {
   font-size: 0.76rem;
   font-weight: 750;
 }
 
+.detail-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.detail-resume,
 .detail-back {
   display: inline-flex;
   align-items: center;
   gap: 9px;
+}
+
+.detail-resume {
+  padding: 9px 12px;
+  color: #0c0c0c;
+  background: var(--detail-accent);
+}
+
+.detail-resume span {
+  font-size: 1rem;
 }
 
 .detail-back span {
@@ -564,6 +582,20 @@ a {
   .detail-brand > span {
     width: 40px;
     height: 40px;
+  }
+
+  .detail-header-actions {
+    gap: 10px;
+  }
+
+  .detail-resume,
+  .detail-back {
+    gap: 6px;
+    font-size: 0.68rem;
+  }
+
+  .detail-resume {
+    padding: 8px 9px;
   }
 
   .detail-hero {

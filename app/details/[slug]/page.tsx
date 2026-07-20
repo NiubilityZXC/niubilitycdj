@@ -44,10 +44,16 @@ export default async function DetailPage({ params }: DetailPageProps) {
           <span>XZ</span>
           <strong>周学聪</strong>
         </Link>
-        <Link className="detail-back" href="/">
-          <span aria-hidden="true">←</span>
-          返回首页
-        </Link>
+        <div className="detail-header-actions">
+          <a className="detail-resume" href="/site/xuecong-zhou-cv-cn.pdf" download="周学聪-中文简历.pdf">
+            <span aria-hidden="true">↓</span>
+            下载简历
+          </a>
+          <Link className="detail-back" href="/">
+            <span aria-hidden="true">←</span>
+            返回首页
+          </Link>
+        </div>
       </header>
 
       <section className="detail-hero" aria-labelledby="detail-title">
