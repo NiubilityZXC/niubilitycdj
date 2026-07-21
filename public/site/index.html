@@ -14,11 +14,11 @@
       property="og:description"
       content="从视觉语言模型研究，到能在真实场景运行的软件系统。"
     />
-    <meta property="og:image" content="./assets/coast-hero.webp" />
+    <meta property="og:image" content="./assets/coast-motion-poster.webp" />
     <title>周学聪 Xuecong Zhou | AI 系统与软件工程</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./assets/vendor/phosphor/style.css" />
-    <link rel="stylesheet" href="./styles.css?v=20260720b" />
+    <link rel="stylesheet" href="./styles.css?v=20260721" />
   </head>
   <body class="is-loading">
     <noscript><style>.intro{display:none}.is-loading{overflow:auto}</style></noscript>
@@ -64,13 +64,18 @@
     <main id="main-content">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-scene" aria-hidden="true">
-          <div class="hero-image-drift">
-            <img src="./assets/coast-hero.webp" alt="" fetchpriority="high" />
-          </div>
-          <div class="ocean-light">
-            <span></span><span></span><span></span>
-          </div>
-          <canvas class="tide-canvas"></canvas>
+          <video
+            class="hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            poster="./assets/coast-motion-poster.webp"
+            data-hero-video
+          >
+            <source src="./assets/coast-motion.mp4" type="video/mp4" />
+          </video>
           <div class="hero-shade"></div>
         </div>
 
@@ -333,7 +338,7 @@
       </section>
 
       <section class="contact section-dark" id="contact" aria-labelledby="contact-title">
-        <div class="contact-coast" aria-hidden="true"><img src="./assets/coast-hero.webp" alt="" loading="lazy" /></div>
+        <div class="contact-coast" aria-hidden="true"><img src="./assets/coast-motion-poster.webp" alt="" loading="lazy" /></div>
         <div class="contact-inner">
           <p class="contact-kicker reveal-item">研究 · 工程 · 产品</p>
           <h2 class="reveal-item" id="contact-title">一起把想法<br />做成系统。</h2>
@@ -355,6 +360,6 @@
 
     <script src="./assets/vendor/gsap/gsap.min.js"></script>
     <script src="./assets/vendor/gsap/ScrollTrigger.min.js"></script>
-    <script src="./script.js?v=20260720b" defer></script>
+    <script src="./script.js?v=20260721" defer></script>
   </body>
 </html>

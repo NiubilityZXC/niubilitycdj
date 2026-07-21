@@ -359,10 +359,7 @@ ul {
 }
 
 .hero-scene,
-.hero-image-drift,
-.ocean-light,
-.hero-shade,
-.tide-canvas {
+.hero-shade {
   position: absolute;
   inset: 0;
 }
@@ -370,77 +367,28 @@ ul {
 .hero-scene {
   z-index: -2;
   overflow: hidden;
-  background: #1b5069;
+  background: #17647f url("./assets/coast-motion-poster.webp") center / cover no-repeat;
 }
 
-.hero-image-drift {
-  inset: -3%;
-  animation: coastDrift 16s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-.hero-scene img {
+.hero-video {
+  position: absolute;
+  top: -6%;
+  left: 0;
   width: 100%;
-  height: 115%;
+  height: 116%;
   max-width: none;
   object-fit: cover;
-  object-position: center 44%;
-  transform: scale(1.06);
+  object-position: center 46%;
+  transform: scale(1.025);
   will-change: transform;
-}
-
-.ocean-light {
-  z-index: 2;
-  top: 43%;
-  overflow: hidden;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-.ocean-light span {
-  position: absolute;
-  left: -30%;
-  width: 160%;
-  height: 48%;
-  border-top: 2px solid rgba(221, 250, 255, 0.34);
-  border-radius: 50%;
-  filter: drop-shadow(0 0 8px rgba(156, 238, 244, 0.32));
-  will-change: transform;
-}
-
-.ocean-light span:nth-child(1) {
-  top: 14%;
-  animation: oceanSwellOne 7s ease-in-out infinite alternate;
-}
-
-.ocean-light span:nth-child(2) {
-  top: 36%;
-  border-top-width: 1px;
-  opacity: 0.7;
-  animation: oceanSwellTwo 9s ease-in-out -2s infinite alternate;
-}
-
-.ocean-light span:nth-child(3) {
-  top: 62%;
-  border-top-color: rgba(236, 255, 255, 0.5);
-  animation: oceanSwellThree 6s ease-in-out -1s infinite alternate;
 }
 
 .hero-shade {
   z-index: 1;
-  background: rgba(5, 12, 17, 0.12);
+  background: rgba(5, 12, 17, 0.24);
   box-shadow:
-    inset 0 150px 130px rgba(5, 12, 17, 0.32),
-    inset 0 -260px 190px rgba(5, 12, 17, 0.72);
-}
-
-.tide-canvas {
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  opacity: 0.82;
-  pointer-events: none;
-  mix-blend-mode: screen;
+    inset 0 160px 140px rgba(5, 12, 17, 0.4),
+    inset 0 -300px 210px rgba(5, 12, 17, 0.76);
 }
 
 .hero-topline {
@@ -1658,27 +1606,6 @@ ul {
   will-change: transform, opacity;
 }
 
-@keyframes coastDrift {
-  0% { transform: translate3d(-0.8%, -0.5%, 0) scale(1.025); }
-  50% { transform: translate3d(0.8%, 0.3%, 0) scale(1.045); }
-  100% { transform: translate3d(-0.1%, 0.9%, 0) scale(1.035); }
-}
-
-@keyframes oceanSwellOne {
-  from { transform: translate3d(-2.5%, 8px, 0) rotate(-1deg) scaleY(0.88); }
-  to { transform: translate3d(2.5%, -10px, 0) rotate(0.7deg) scaleY(1.08); }
-}
-
-@keyframes oceanSwellTwo {
-  from { transform: translate3d(3%, -5px, 0) rotate(0.8deg) scaleY(1.04); }
-  to { transform: translate3d(-3%, 13px, 0) rotate(-0.8deg) scaleY(0.9); }
-}
-
-@keyframes oceanSwellThree {
-  from { transform: translate3d(-1.5%, 10px, 0) rotate(-0.4deg) scaleY(0.94); }
-  to { transform: translate3d(2%, -7px, 0) rotate(0.6deg) scaleY(1.12); }
-}
-
 @keyframes statusPulse {
   50% { opacity: 0.45; transform: scale(0.8); }
 }
@@ -1787,7 +1714,7 @@ ul {
 
   .brand-copy { display: none; }
   .hero { min-height: 92svh; }
-  .hero-scene img { height: 108%; object-position: 43% center; }
+  .hero-video { top: -2%; height: 106%; object-position: center center; }
   .hero-topline { top: calc(var(--header-height) + 14px); font-size: 0.58rem; }
   .hero-topline span:first-child { max-width: 155px; }
   .hero-title-wrap { top: 23%; }
@@ -1894,8 +1821,8 @@ ul {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .cursor, .tide-canvas { display: none; }
-  .hero-scene img { transform: none !important; }
+  .cursor { display: none; }
+  .hero-video { top: 0; height: 100%; transform: none !important; }
   .hero-title-line > span { transform: none; }
   .reveal-item { opacity: 1 !important; transform: none !important; }
   .about-copy span { opacity: 1; }
