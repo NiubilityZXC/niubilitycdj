@@ -21,7 +21,7 @@ const manropeFont = dataUrl("font/woff2", "assets", "fonts", "manrope-latin-wght
 const phosphorFont = dataUrl("font/woff2", "assets", "vendor", "phosphor", "Phosphor.woff2");
 const systemsVisual = dataUrl("image/png", "assets", "systems-visual.png");
 const coastMotionPoster = dataUrl("image/webp", "assets", "coast-motion-poster.webp");
-const coastMotionVideo = "https://niubilitycdj.vercel.app/assets/coast-motion.mp4";
+const coastMotionVideo = dataUrl("video/mp4", "assets", "coast-motion.mp4");
 const favicon = dataUrl("image/svg+xml", "favicon.svg");
 
 let mainCss = readText("styles.css").replace(
@@ -66,6 +66,7 @@ html = html.replaceAll("./assets/systems-visual.png", systemsVisual);
 html = html.replaceAll("./assets/coast-motion-poster.webp", coastMotionPoster);
 html = html.replaceAll("./assets/coast-motion.mp4", coastMotionVideo);
 html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "https://niubilitycdj.vercel.app/xuecong-zhou-cv-cn.pdf");
+html = html.replaceAll('href="/details/', 'href="https://niubilitycdj.vercel.app/details/');
 
 replaceOnce(
   '<script src="./assets/vendor/gsap/gsap.min.js"></script>',
