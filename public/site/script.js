@@ -169,15 +169,18 @@
   const characterSpans = splitCharacterText();
 
   const setupHeroVideo = () => {
+    const hero = $(".hero");
+    const scene = $(".hero-scene");
     const video = $("[data-hero-video]");
-    if (!video) return;
+    if (!hero || !scene || !video) return;
 
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
+    let heroVisible = true;
 
     const play = () => {
-      if (reduceMotion || document.hidden) {
+      if (reduceMotion || document.hidden || !heroVisible) {
         video.pause();
         return;
       }
@@ -197,9 +200,102 @@
 
     document.addEventListener("visibilitychange", play);
     window.addEventListener("pageshow", play);
+
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      heroVisible = entry?.isIntersecting ?? true;
+      play();
+    }, { threshold: 0.04 });
+    visibilityObserver.observe(hero);
+
+    if (!reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+      const target = { panX: 0, panY: 0, tiltX: 0, tiltY: 0 };
+      const current = { panX: 0, panY: 0, tiltX: 0, tiltY: 0 };
+      let pressed = false;
+
+      const render = () => {
+        current.panX += (target.panX - current.panX) * 0.11;
+        current.panY += (target.panY - current.panY) * 0.11;
+        current.tiltX += (target.tiltX - current.tiltX) * 0.11;
+        current.tiltY += (target.tiltY - current.tiltY) * 0.11;
+        scene.style.setProperty("--hero-pan-x", `${current.panX.toFixed(2)}px`);
+        scene.style.setProperty("--hero-pan-y", `${current.panY.toFixed(2)}px`);
+        scene.style.setProperty("--hero-tilt-x", `${current.tiltX.toFixed(2)}deg`);
+        scene.style.setProperty("--hero-tilt-y", `${current.tiltY.toFixed(2)}deg`);
+        requestAnimationFrame(render);
+      };
+
+      hero.addEventListener("pointermove", (event) => {
+        const rect = hero.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1));
+        const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1));
+        target.panX = x * -16;
+        target.panY = y * -10;
+        target.tiltX = y * -1.15;
+        target.tiltY = x * 1.45;
+        if (!pressed) video.playbackRate = 1 + x * 0.16;
+        scene.classList.add("is-interacting");
+      }, { passive: true });
+
+      hero.addEventListener("pointerleave", () => {
+        target.panX = 0;
+        target.panY = 0;
+        target.tiltX = 0;
+        target.tiltY = 0;
+        pressed = false;
+        video.playbackRate = 1;
+        scene.classList.remove("is-interacting", "is-pressed");
+      }, { passive: true });
+
+      hero.addEventListener("pointerdown", (event) => {
+        if (event.target.closest("a, button")) return;
+        pressed = true;
+        video.playbackRate = 0.58;
+        scene.classList.add("is-pressed");
+      });
+
+      window.addEventListener("pointerup", () => {
+        if (!pressed) return;
+        pressed = false;
+        video.playbackRate = 1;
+        scene.classList.remove("is-pressed");
+      }, { passive: true });
+
+      render();
+    }
   };
 
   setupHeroVideo();
+
+  const setupProjectInteractions = () => {
+    if (reduceMotion || !window.matchMedia("(pointer: fine)").matches) return;
+
+    $$('[data-stack-card]').forEach((card) => {
+      card.addEventListener("pointermove", (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1));
+        const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1));
+        card.style.setProperty("--media-tilt-x", `${(-y * 2.8).toFixed(2)}deg`);
+        card.style.setProperty("--media-tilt-y", `${(x * 3.2).toFixed(2)}deg`);
+        card.style.setProperty("--media-shift-x", `${(x * 4).toFixed(2)}px`);
+        card.style.setProperty("--media-shift-y", `${(y * 3).toFixed(2)}px`);
+        card.style.setProperty("--media-image-x", `${(-x * 9).toFixed(2)}px`);
+        card.style.setProperty("--media-image-y", `${(-y * 7).toFixed(2)}px`);
+        card.classList.add("is-interacting");
+      }, { passive: true });
+
+      card.addEventListener("pointerleave", () => {
+        card.style.setProperty("--media-tilt-x", "0deg");
+        card.style.setProperty("--media-tilt-y", "0deg");
+        card.style.setProperty("--media-shift-x", "0px");
+        card.style.setProperty("--media-shift-y", "0px");
+        card.style.setProperty("--media-image-x", "0px");
+        card.style.setProperty("--media-image-y", "0px");
+        card.classList.remove("is-interacting");
+      }, { passive: true });
+    });
+  };
+
+  setupProjectInteractions();
 
   if (gsapReady && scrollTriggerReady && !reduceMotion) {
     const gsap = window.gsap;
@@ -221,9 +317,9 @@
       );
     });
 
-    gsap.to(".hero-video", {
-      yPercent: 10,
-      scale: 1.12,
+    gsap.to("[data-hero-video-motion]", {
+      yPercent: 7,
+      scale: 1.045,
       ease: "none",
       scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.8 },
     });
@@ -254,8 +350,8 @@
     if (characterSpans.length) {
       ScrollTrigger.create({
         trigger: "[data-character-reveal]",
-        start: "top 78%",
-        end: "bottom 36%",
+        start: "top 96%",
+        end: "top 70%",
         scrub: true,
         onUpdate: ({ progress }) => {
           const visibleCount = Math.ceil(progress * characterSpans.length);

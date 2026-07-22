@@ -14,11 +14,11 @@
       property="og:description"
       content="从视觉语言模型研究，到能在真实场景运行的软件系统。"
     />
-    <meta property="og:image" content="./assets/coast-motion-poster.webp" />
+    <meta property="og:image" content="./assets/coast-motion-hd-poster.webp" />
     <title>周学聪 Xuecong Zhou | AI 系统与软件工程</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./assets/vendor/phosphor/style.css" />
-    <link rel="stylesheet" href="./styles.css?v=20260721" />
+    <link rel="stylesheet" href="./styles.css?v=20260722" />
   </head>
   <body class="is-loading">
     <noscript><style>.intro{display:none}.is-loading{overflow:auto}</style></noscript>
@@ -64,18 +64,20 @@
     <main id="main-content">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-scene" aria-hidden="true">
-          <video
-            class="hero-video"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-            poster="./assets/coast-motion-poster.webp"
-            data-hero-video
-          >
-            <source src="./assets/coast-motion.mp4" type="video/mp4" />
-          </video>
+          <div class="hero-video-motion" data-hero-video-motion>
+            <video
+              class="hero-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              poster="./assets/coast-motion-hd-poster.webp"
+              data-hero-video
+            >
+              <source src="./assets/coast-motion-hd.mp4" type="video/mp4" />
+            </video>
+          </div>
           <div class="hero-shade"></div>
         </div>
 
@@ -207,11 +209,14 @@
         <div class="project-stack">
           <div class="project-stage">
             <article class="project-card project-card-green" data-stack-card>
-              <a class="project-card-hitbox" href="/details/vlm-reliability" target="_top" aria-label="查看视觉语言模型可靠性研究详情"><span>查看详情 <i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></a>
+              <a class="project-card-hitbox" href="/details/vlm-reliability" target="_top" aria-label="查看视觉语言模型可靠性研究详情"></a>
               <header>
                 <span class="project-card-no">01</span>
                 <div><p>研究项目 · 2025 至今</p><h3>VLM Reliability</h3></div>
-                <span class="project-card-tag">视觉语言模型</span>
+                <div class="project-card-actions">
+                  <span class="project-card-tag">视觉语言模型</span>
+                  <span class="project-card-cta" aria-hidden="true">查看详情 <i class="ph ph-arrow-up-right"></i></span>
+                </div>
               </header>
               <div class="project-card-body">
                 <div class="project-description">
@@ -228,11 +233,14 @@
 
           <div class="project-stage">
             <article class="project-card project-card-orange" data-stack-card>
-              <a class="project-card-hitbox" href="/details/visionrl-kuka" target="_top" aria-label="查看 VisionRL-KUKA 项目详情"><span>查看详情 <i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></a>
+              <a class="project-card-hitbox" href="/details/visionrl-kuka" target="_top" aria-label="查看 VisionRL-KUKA 项目详情"></a>
               <header>
                 <span class="project-card-no">02</span>
                 <div><p>课程项目 · 2025 年 4 月</p><h3>VisionRL-KUKA</h3></div>
-                <span class="project-card-tag">机器人学习</span>
+                <div class="project-card-actions">
+                  <span class="project-card-tag">机器人学习</span>
+                  <span class="project-card-cta" aria-hidden="true">查看详情 <i class="ph ph-arrow-up-right"></i></span>
+                </div>
               </header>
               <div class="project-card-body">
                 <div class="project-description">
@@ -251,11 +259,14 @@
 
           <div class="project-stage">
             <article class="project-card project-card-blue" data-stack-card>
-              <a class="project-card-hitbox" href="/details/gt-social" target="_top" aria-label="查看 GT-Social 项目详情"><span>查看详情 <i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></a>
+              <a class="project-card-hitbox" href="/details/gt-social" target="_top" aria-label="查看 GT-Social 项目详情"></a>
               <header>
                 <span class="project-card-no">03</span>
                 <div><p>产品项目 · 2024 年 9 月至 12 月</p><h3>GT-Social</h3></div>
-                <span class="project-card-tag">跨平台应用</span>
+                <div class="project-card-actions">
+                  <span class="project-card-tag">跨平台应用</span>
+                  <span class="project-card-cta" aria-hidden="true">查看详情 <i class="ph ph-arrow-up-right"></i></span>
+                </div>
               </header>
               <div class="project-card-body">
                 <div class="project-description">
@@ -338,7 +349,7 @@
       </section>
 
       <section class="contact section-dark" id="contact" aria-labelledby="contact-title">
-        <div class="contact-coast" aria-hidden="true"><img src="./assets/coast-motion-poster.webp" alt="" loading="lazy" /></div>
+        <div class="contact-coast" aria-hidden="true"><img src="./assets/coast-motion-hd-poster.webp" alt="" loading="lazy" /></div>
         <div class="contact-inner">
           <p class="contact-kicker reveal-item">研究 · 工程 · 产品</p>
           <h2 class="reveal-item" id="contact-title">一起把想法<br />做成系统。</h2>
@@ -360,6 +371,6 @@
 
     <script src="./assets/vendor/gsap/gsap.min.js"></script>
     <script src="./assets/vendor/gsap/ScrollTrigger.min.js"></script>
-    <script src="./script.js?v=20260721" defer></script>
+    <script src="./script.js?v=20260722" defer></script>
   </body>
 </html>

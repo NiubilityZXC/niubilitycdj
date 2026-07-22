@@ -20,8 +20,8 @@ const dataUrl = (mimeType, ...parts) => {
 const manropeFont = dataUrl("font/woff2", "assets", "fonts", "manrope-latin-wght-normal.woff2");
 const phosphorFont = dataUrl("font/woff2", "assets", "vendor", "phosphor", "Phosphor.woff2");
 const systemsVisual = dataUrl("image/png", "assets", "systems-visual.png");
-const coastMotionPoster = dataUrl("image/webp", "assets", "coast-motion-poster.webp");
-const coastMotionVideo = dataUrl("video/mp4", "assets", "coast-motion.mp4");
+const coastMotionPoster = dataUrl("image/webp", "assets", "coast-motion-hd-poster.webp");
+const coastMotionVideo = dataUrl("video/mp4", "assets", "coast-motion-hd.mp4");
 const favicon = dataUrl("image/svg+xml", "favicon.svg");
 
 let mainCss = readText("styles.css").replace(
@@ -57,14 +57,14 @@ replaceOnce(
   "Phosphor stylesheet",
 );
 replaceOnce(
-  '<link rel="stylesheet" href="./styles.css?v=20260721" />',
+  '<link rel="stylesheet" href="./styles.css?v=20260722" />',
   `<style>\n${escapeStyle(phosphorCss)}\n${escapeStyle(mainCss)}\n</style>`,
   "main stylesheet",
 );
 
 html = html.replaceAll("./assets/systems-visual.png", systemsVisual);
-html = html.replaceAll("./assets/coast-motion-poster.webp", coastMotionPoster);
-html = html.replaceAll("./assets/coast-motion.mp4", coastMotionVideo);
+html = html.replaceAll("./assets/coast-motion-hd-poster.webp", coastMotionPoster);
+html = html.replaceAll("./assets/coast-motion-hd.mp4", coastMotionVideo);
 html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "https://niubilitycdj.vercel.app/xuecong-zhou-cv-cn.pdf");
 html = html.replaceAll('href="/details/', 'href="https://niubilitycdj.vercel.app/details/');
 
@@ -79,7 +79,7 @@ replaceOnce(
   "ScrollTrigger script",
 );
 replaceOnce(
-  '<script src="./script.js?v=20260721" defer></script>',
+  '<script src="./script.js?v=20260722" defer></script>',
   `<script>${escapeScript(readText("script.js"))}</script>`,
   "site script",
 );
