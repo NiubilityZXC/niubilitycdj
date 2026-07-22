@@ -13,7 +13,7 @@ export type DetailSection = {
 export type DetailEntry = {
   slug: string;
   number: string;
-  category: "研究经历" | "项目经历" | "实习经历";
+  category: "研究经历" | "项目经历" | "工作经历" | "实习经历";
   title: string;
   subtitle: string;
   period: string;
@@ -294,8 +294,61 @@ export const details: DetailEntry[] = [
     ],
   },
   {
-    slug: "erp-internship",
+    slug: "ai-enablement-specialist",
     number: "08",
+    category: "工作经历",
+    title: "AI 赋能专员",
+    subtitle: "安东聚变（太仓）科技有限公司",
+    period: "2025 年 9 月至今",
+    location: "中国江苏太仓",
+    summary:
+      "建设企业级 AI 应用、智能体工具链与算力基础设施，推进内部系统和业务流程智能化。",
+    tags: [
+      "vLLM",
+      "Open WebUI",
+      "RAGFlow",
+      "Nextcloud",
+      "WebDAV",
+      "FLASH Skill",
+      "SolidWorks Skill",
+      "Agent",
+    ],
+    accent: "yellow",
+    sections: [
+      {
+        title: "企业 AI 平台",
+        bullets: [
+          "负责公司内部 AI 系统开发、AI 工具培训与推广、内网建设及公司网站建设。",
+          "基于 vLLM、Open WebUI 和 RAGFlow 私有化部署企业知识库问答系统。",
+          "实现用户身份认证、角色权限管理、知识库访问控制及内部资料检索问答。",
+        ],
+      },
+      {
+        title: "文件与知识同步",
+        bullets: [
+          "基于 WebDAV 开发 Nextcloud 文件管理系统与 RAG 知识库之间的自动同步功能。",
+          "实现企业文件的自动更新、解析与入库。",
+        ],
+      },
+      {
+        title: "工程 Skill",
+        bullets: [
+          "开发 FLASH 物理仿真软件 Skill，使 Agent 能够通过自然语言完成仿真参数配置、任务运行及结果处理。",
+          "开发 SolidWorks Skill，并结合专利检索与分析 Skill，实现从专利技术描述、结构理解到三维模型及工程图纸生成的自动化流程。",
+        ],
+      },
+      {
+        title: "评测与算力基础设施",
+        bullets: [
+          "搭建 SolidWorks 建模自动评测系统，对尺寸精度、结构完整性、特征正确性及任务完成情况进行自动化评估。",
+          "负责 AI 算力服务器需求分析、硬件选型、成本评估、系统部署及大模型推理环境配置。",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "erp-internship",
+    number: "09",
     category: "实习经历",
     title: "ERP 软件实习生",
     subtitle: "上海佳格食品有限公司苏州分公司",
@@ -326,7 +379,7 @@ export const details: DetailEntry[] = [
   },
   {
     slug: "software-internship",
-    number: "09",
+    number: "10",
     category: "实习经历",
     title: "软件实习生",
     subtitle: "苏州茵凡科技",

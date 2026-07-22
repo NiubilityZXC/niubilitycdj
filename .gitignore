@@ -15,3 +15,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 .env*
+
+# Local LaTeX reconstruction inputs and toolchain
+latex_resume/fonts/
+latex_resume/reference/
+tools/tectonic/
+tmp/
+output/pdf/*.log
+
+.vercel
