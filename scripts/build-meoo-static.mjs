@@ -16,12 +16,11 @@ const dataUrl = (mimeType, ...parts) => {
   const encoded = readFileSync(join(sourceDir, ...parts)).toString("base64");
   return `data:${mimeType};base64,${encoded}`;
 };
+const vercelAssetBase = "https://niubilitycdj.vercel.app/assets";
 
 const manropeFont = dataUrl("font/woff2", "assets", "fonts", "manrope-latin-wght-normal.woff2");
 const phosphorFont = dataUrl("font/woff2", "assets", "vendor", "phosphor", "Phosphor.woff2");
 const systemsVisual = dataUrl("image/png", "assets", "systems-visual.png");
-const coastMotionPoster = dataUrl("image/webp", "assets", "coast-motion-hd-poster.webp");
-const coastMotionVideo = dataUrl("video/mp4", "assets", "coast-motion-hd.mp4");
 const favicon = dataUrl("image/svg+xml", "favicon.svg");
 
 let mainCss = readText("styles.css").replace(
@@ -63,8 +62,14 @@ replaceOnce(
 );
 
 html = html.replaceAll("./assets/systems-visual.png", systemsVisual);
-html = html.replaceAll("./assets/coast-motion-hd-poster.webp", coastMotionPoster);
-html = html.replaceAll("./assets/coast-motion-hd.mp4", coastMotionVideo);
+html = html.replaceAll(
+  "./assets/coast-motion-hd-poster.webp",
+  `${vercelAssetBase}/coast-motion-hd-poster.webp`,
+);
+html = html.replaceAll(
+  "./assets/coast-motion-hd.mp4",
+  `${vercelAssetBase}/coast-motion-hd.mp4`,
+);
 html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "https://niubilitycdj.vercel.app/xuecong-zhou-cv-cn.pdf");
 html = html.replaceAll('href="/details/', 'href="https://niubilitycdj.vercel.app/details/');
 
