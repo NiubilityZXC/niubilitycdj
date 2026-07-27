@@ -65,7 +65,7 @@ replaceOnce(
 html = html.replaceAll("./assets/systems-visual.png", systemsVisual);
 html = html.replaceAll("./assets/coast-motion-hd-poster.webp", coastMotionPoster);
 html = html.replaceAll("./assets/coast-motion-hd.mp4", coastMotionVideo);
-html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "/xuecong-zhou-cv-cn.pdf");
+html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "/assets/xuecong-zhou-cv-cn.pdf");
 html = html.replaceAll('href="/details/', 'href="https://niubilitycdj.vercel.app/details/');
 
 replaceOnce(
@@ -91,9 +91,10 @@ if (unresolvedMarkup.length || unresolvedCss.length) {
 }
 
 const outputFile = join(stageRoot, "dist", "index.html");
-const resumeFile = join(stageRoot, "dist", "xuecong-zhou-cv-cn.pdf");
+const resumeFile = join(stageRoot, "dist", "assets", "xuecong-zhou-cv-cn.pdf");
 rmSync(stageRoot, { recursive: true, force: true });
 mkdirSync(dirname(outputFile), { recursive: true });
+mkdirSync(dirname(resumeFile), { recursive: true });
 writeFileSync(outputFile, html, "utf8");
 copyFileSync(join(sourceDir, "xuecong-zhou-cv-cn.pdf"), resumeFile);
 
