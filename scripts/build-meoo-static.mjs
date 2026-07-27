@@ -1,4 +1,4 @@
-import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -23,6 +23,7 @@ const systemsVisual = dataUrl("image/png", "assets", "systems-visual.png");
 const coastMotionPoster = dataUrl("image/webp", "assets", "coast-motion-meoo-poster.webp");
 const coastMotionVideo = dataUrl("video/mp4", "assets", "coast-motion-meoo-hd.mp4");
 const favicon = dataUrl("image/svg+xml", "favicon.svg");
+const resumePdfBase64 = readFileSync(join(sourceDir, "xuecong-zhou-cv-cn.pdf")).toString("base64");
 
 let mainCss = readText("styles.css").replace(
   'url("./assets/fonts/manrope-latin-wght-normal.woff2")',
@@ -65,7 +66,7 @@ replaceOnce(
 html = html.replaceAll("./assets/systems-visual.png", systemsVisual);
 html = html.replaceAll("./assets/coast-motion-hd-poster.webp", coastMotionPoster);
 html = html.replaceAll("./assets/coast-motion-hd.mp4", coastMotionVideo);
-html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "/assets/xuecong-zhou-cv-cn.pdf");
+html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "#download-resume");
 html = html.replaceAll('href="/details/', 'href="https://niubilitycdj.vercel.app/details/');
 
 replaceOnce(
@@ -83,6 +84,25 @@ replaceOnce(
   `<script>${escapeScript(readText("script.js"))}</script>`,
   "site script",
 );
+replaceOnce(
+  "</body>",
+  `<script>
+    (() => {
+      const binary = atob("${resumePdfBase64}");
+      const bytes = new Uint8Array(binary.length);
+      for (let index = 0; index < binary.length; index += 1) {
+        bytes[index] = binary.charCodeAt(index);
+      }
+      const resumeUrl = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+      document.querySelectorAll('a[href="#download-resume"]').forEach((link) => {
+        link.href = resumeUrl;
+      });
+      window.addEventListener("pagehide", () => URL.revokeObjectURL(resumeUrl), { once: true });
+    })();
+  </script>
+</body>`,
+  "body closing tag",
+);
 
 const unresolvedMarkup = html.match(/(?:src|href)=["']\.\/[^"']+/g) ?? [];
 const unresolvedCss = html.match(/url\(["']?\.\//g) ?? [];
@@ -91,11 +111,8 @@ if (unresolvedMarkup.length || unresolvedCss.length) {
 }
 
 const outputFile = join(stageRoot, "dist", "index.html");
-const resumeFile = join(stageRoot, "dist", "assets", "xuecong-zhou-cv-cn.pdf");
 rmSync(stageRoot, { recursive: true, force: true });
 mkdirSync(dirname(outputFile), { recursive: true });
-mkdirSync(dirname(resumeFile), { recursive: true });
 writeFileSync(outputFile, html, "utf8");
-copyFileSync(join(sourceDir, "xuecong-zhou-cv-cn.pdf"), resumeFile);
 
-console.log(`Built Meoo page and resume: ${outputFile} (${Buffer.byteLength(html)} bytes)`);
+console.log(`Built self-contained Meoo page with embedded resume: ${outputFile} (${Buffer.byteLength(html)} bytes)`);
