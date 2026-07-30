@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -22,6 +22,8 @@ const phosphorFont = dataUrl("font/woff2", "assets", "vendor", "phosphor", "Phos
 const systemsVisual = dataUrl("image/png", "assets", "systems-visual.png");
 const coastMotionPoster = dataUrl("image/webp", "assets", "coast-motion-meoo-poster.webp");
 const coastMotionVideo = dataUrl("video/mp4", "assets", "coast-motion-meoo-hd.mp4");
+const visionDemoPoster = dataUrl("image/webp", "media", "visionrl", "video", "main-demo-poster.webp");
+const visionDemoVideo = dataUrl("video/mp4", "media", "visionrl", "video", "main-demo.mp4");
 const favicon = dataUrl("image/svg+xml", "favicon.svg");
 const resumePdfBase64 = readFileSync(join(sourceDir, "xuecong-zhou-cv-cn.pdf")).toString("base64");
 
@@ -58,7 +60,7 @@ replaceOnce(
   "Phosphor stylesheet",
 );
 replaceOnce(
-  '<link rel="stylesheet" href="./styles.css?v=20260722" />',
+  '<link rel="stylesheet" href="./styles.css?v=20260730media" />',
   `<style>\n${escapeStyle(phosphorCss)}\n${escapeStyle(mainCss)}\n</style>`,
   "main stylesheet",
 );
@@ -66,8 +68,10 @@ replaceOnce(
 html = html.replaceAll("./assets/systems-visual.png", systemsVisual);
 html = html.replaceAll("./assets/coast-motion-hd-poster.webp", coastMotionPoster);
 html = html.replaceAll("./assets/coast-motion-hd.mp4", coastMotionVideo);
+html = html.replaceAll("./media/visionrl/video/main-demo-poster.webp", visionDemoPoster);
+html = html.replaceAll("./media/visionrl/video/main-demo.mp4", visionDemoVideo);
 html = html.replaceAll("./xuecong-zhou-cv-cn.pdf", "#download-resume");
-html = html.replaceAll('href="/details/', 'href="https://niubilitycdj.vercel.app/details/');
+html = html.replace(/href="\/details\/([^"]+)"/g, 'href="./details/$1/index.html"');
 
 replaceOnce(
   '<script src="./assets/vendor/gsap/gsap.min.js"></script>',
@@ -80,7 +84,7 @@ replaceOnce(
   "ScrollTrigger script",
 );
 replaceOnce(
-  '<script src="./script.js?v=20260722" defer></script>',
+  '<script src="./script.js?v=20260730media" defer></script>',
   `<script>${escapeScript(readText("script.js"))}</script>`,
   "site script",
 );
@@ -104,15 +108,29 @@ replaceOnce(
   "body closing tag",
 );
 
-const unresolvedMarkup = html.match(/(?:src|href)=["']\.\/[^"']+/g) ?? [];
+const unresolvedMarkup = (html.match(/(?:src|href)=["']\.\/[^"']+/g) ?? []).filter(
+  (reference) => !reference.startsWith('href="./details/'),
+);
 const unresolvedCss = html.match(/url\(["']?\.\//g) ?? [];
 if (unresolvedMarkup.length || unresolvedCss.length) {
   throw new Error(`Unresolved Meoo asset references: ${[...unresolvedMarkup, ...unresolvedCss].join(", ")}`);
 }
 
 const outputFile = join(stageRoot, "dist", "index.html");
+const outputDir = dirname(outputFile);
 rmSync(stageRoot, { recursive: true, force: true });
-mkdirSync(dirname(outputFile), { recursive: true });
+mkdirSync(outputDir, { recursive: true });
 writeFileSync(outputFile, html, "utf8");
 
-console.log(`Built self-contained Meoo page with embedded resume: ${outputFile} (${Buffer.byteLength(html)} bytes)`);
+const copyTree = (source, target) =>
+  cpSync(source, target, { recursive: true, filter: () => true });
+
+copyTree(join(sourceDir, "details"), join(outputDir, "details"));
+copyTree(join(sourceDir, "media"), join(outputDir, "media"));
+copyTree(join(sourceDir, "assets", "fonts"), join(outputDir, "assets", "fonts"));
+copyFileSync(join(sourceDir, "favicon.svg"), join(outputDir, "favicon.svg"));
+copyFileSync(join(sourceDir, "xuecong-zhou-cv-cn.pdf"), join(outputDir, "xuecong-zhou-cv-cn.pdf"));
+
+console.log(
+  `Built Meoo multipage site with an embedded homepage and local detail media: ${outputDir}`,
+);

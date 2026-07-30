@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { detailBySlug, details } from "../data";
+import MediaPreview from "../media-preview";
 
 type DetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -119,6 +120,8 @@ export default async function DetailPage({ params }: DetailPageProps) {
           ))}
         </div>
       </section>
+
+      {detail.mediaGroups?.length ? <MediaPreview groups={detail.mediaGroups} /> : null}
 
       {detail.links?.length ? (
         <section className="detail-links" aria-labelledby="detail-links-title">

@@ -10,6 +10,32 @@ export type DetailSection = {
   bullets?: string[];
 };
 
+export type DetailMediaVideo = {
+  title: string;
+  source: string;
+  poster: string;
+  duration: string;
+  slide: number;
+};
+
+export type DetailMediaItem = {
+  id: string;
+  title: string;
+  kind: "PDF" | "PPTX";
+  pageCount: number;
+  assetBase: string;
+  assetPrefix: "page" | "slide";
+  videos?: DetailMediaVideo[];
+};
+
+export type DetailMediaGroup = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  defaultItemIndex?: number;
+  items: DetailMediaItem[];
+};
+
 export type DetailEntry = {
   slug: string;
   number: string;
@@ -22,6 +48,7 @@ export type DetailEntry = {
   tags: string[];
   accent: "teal" | "coral" | "blue" | "yellow";
   sections: DetailSection[];
+  mediaGroups?: DetailMediaGroup[];
   links?: DetailLink[];
 };
 
@@ -125,6 +152,56 @@ export const details: DetailEntry[] = [
         ],
       },
     ],
+    mediaGroups: [
+      {
+        eyebrow: "研究资料",
+        title: "论文、汇报与实验视频",
+        description:
+          "完整浏览 Adaptive Reward Mechanism 论文、34 页课程汇报，以及幻灯片中嵌入的三段实验视频。",
+        defaultItemIndex: 1,
+        items: [
+          {
+            id: "visionrl-paper",
+            title: "Adaptive Reward Mechanism 论文",
+            kind: "PDF",
+            pageCount: 7,
+            assetBase: "/site/media/visionrl/paper",
+            assetPrefix: "page",
+          },
+          {
+            id: "visionrl-presentation",
+            title: "VisionRL-KUKA 项目汇报",
+            kind: "PPTX",
+            pageCount: 34,
+            assetBase: "/site/media/visionrl/presentation",
+            assetPrefix: "slide",
+            videos: [
+              {
+                title: "完整环境运行演示",
+                source: "/site/media/visionrl/video/main-demo.mp4",
+                poster: "/site/media/visionrl/video/main-demo-poster.webp",
+                duration: "00:35",
+                slide: 5,
+              },
+              {
+                title: "固定奖励测试",
+                source: "/site/media/visionrl/video/simulation-a.mp4",
+                poster: "/site/media/visionrl/video/simulation-a-poster.webp",
+                duration: "00:20",
+                slide: 32,
+              },
+              {
+                title: "自适应奖励测试",
+                source: "/site/media/visionrl/video/simulation-b.mp4",
+                poster: "/site/media/visionrl/video/simulation-b-poster.webp",
+                duration: "00:20",
+                slide: 32,
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     slug: "gt-social",
@@ -201,6 +278,48 @@ export const details: DetailEntry[] = [
         ],
       },
     ],
+    mediaGroups: [
+      {
+        eyebrow: "课程资料",
+        title: "该课程其他汇报或者小组作业",
+        description:
+          "集中浏览课程提案、Knowledge Augmented Conversational AI 论文与汇报，以及对应论文评述。",
+        items: [
+          {
+            id: "cai-proposal",
+            title: "课程项目提案",
+            kind: "PDF",
+            pageCount: 6,
+            assetBase: "/site/media/conversational-ai/proposal",
+            assetPrefix: "page",
+          },
+          {
+            id: "cai-paper",
+            title: "Knowledge Augmented CAI 课程论文",
+            kind: "PDF",
+            pageCount: 10,
+            assetBase: "/site/media/conversational-ai/paper",
+            assetPrefix: "page",
+          },
+          {
+            id: "cai-presentation",
+            title: "Knowledge Augmented CAI 课程汇报",
+            kind: "PPTX",
+            pageCount: 23,
+            assetBase: "/site/media/conversational-ai/presentation",
+            assetPrefix: "slide",
+          },
+          {
+            id: "cai-critique",
+            title: "Knowledge Augmented CAI 论文评述",
+            kind: "PDF",
+            pageCount: 2,
+            assetBase: "/site/media/conversational-ai/critique",
+            assetPrefix: "page",
+          },
+        ],
+      },
+    ],
   },
   {
     slug: "bitcoin-price-prediction",
@@ -229,10 +348,99 @@ export const details: DetailEntry[] = [
         ],
       },
     ],
+    mediaGroups: [
+      {
+        eyebrow: "课程报告",
+        title: "比特币价格预测项目报告",
+        description:
+          "在线浏览完整的统计机器学习项目报告，包括数据处理、模型比较、实验结果与结论。",
+        items: [
+          {
+            id: "bitcoin-report",
+            title: "Machine Learning Project Report",
+            kind: "PDF",
+            pageCount: 35,
+            assetBase: "/site/media/bitcoin-price-prediction/report",
+            assetPrefix: "page",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "technology-entrepreneur",
+    number: "06",
+    category: "项目经历",
+    title: "PosturePerfect 创业课项目",
+    subtitle: "Technology Entrepreneur - ECE-6001-TSZ",
+    period: "课程项目",
+    location: "Georgia Tech",
+    summary:
+      "围绕儿童久坐与不良体态问题，设计可穿戴姿态提醒设备、数据分析界面与商业化方案。",
+    tags: [
+      "Technology Entrepreneur",
+      "PosturePerfect",
+      "可穿戴设备",
+      "触觉反馈",
+      "数据分析",
+      "BMC",
+      "NPV",
+    ],
+    accent: "teal",
+    sections: [
+      {
+        title: "创业命题",
+        bullets: [
+          "聚焦儿童屏幕使用时间增长、久坐和不良体态带来的健康问题。",
+          "提出面向家庭场景的 PosturePerfect 产品概念，以持续姿态监测降低长期体态风险。",
+        ],
+      },
+      {
+        title: "产品方案",
+        bullets: [
+          "设计轻量可穿戴姿态矫正设备，通过触觉反馈及时提醒用户调整坐姿。",
+          "配套数据分析界面，呈现姿态趋势、异常记录与个性化提醒。",
+        ],
+      },
+      {
+        title: "商业验证",
+        bullets: [
+          "通过 Learning Card 与 Test Card 验证用户需求、支付意愿和产品假设。",
+          "完成市场规模估算、Business Model Canvas 与净现值分析，形成完整创业汇报。",
+        ],
+      },
+    ],
+    mediaGroups: [
+      {
+        eyebrow: "课程汇报",
+        title: "Technology Entrepreneur 项目演示",
+        description:
+          "在线浏览 12 页创业项目汇报，并直接播放第 8 页中的 PosturePerfect 产品演示视频。",
+        items: [
+          {
+            id: "entrepreneurship-presentation",
+            title: "PosturePerfect 最终汇报",
+            kind: "PPTX",
+            pageCount: 12,
+            assetBase: "/site/media/entrepreneurship/presentation",
+            assetPrefix: "slide",
+            videos: [
+              {
+                title: "PosturePerfect 产品演示",
+                source: "/site/media/entrepreneurship/video/product-demo.mp4",
+                poster: "/site/media/entrepreneurship/video/product-demo-poster.webp",
+                duration: "01:23",
+                slide: 8,
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     slug: "aws-cloud-system",
-    number: "06",
+    number: "07",
     category: "项目经历",
     title: "AWS 云计算项目",
     subtitle: "云计算 · 课程项目",
@@ -256,7 +464,7 @@ export const details: DetailEntry[] = [
   },
   {
     slug: "online-education-platform",
-    number: "07",
+    number: "08",
     category: "项目经历",
     title: "在线教育视频平台",
     subtitle: "软件工程毕业设计",
@@ -295,7 +503,7 @@ export const details: DetailEntry[] = [
   },
   {
     slug: "ai-enablement-specialist",
-    number: "08",
+    number: "09",
     category: "工作经历",
     title: "AI 赋能专员",
     subtitle: "安东聚变（太仓）科技有限公司",
@@ -348,7 +556,7 @@ export const details: DetailEntry[] = [
   },
   {
     slug: "erp-internship",
-    number: "09",
+    number: "10",
     category: "实习经历",
     title: "ERP 软件实习生",
     subtitle: "上海佳格食品有限公司苏州分公司",
@@ -379,7 +587,7 @@ export const details: DetailEntry[] = [
   },
   {
     slug: "software-internship",
-    number: "10",
+    number: "11",
     category: "实习经历",
     title: "软件实习生",
     subtitle: "苏州茵凡科技",

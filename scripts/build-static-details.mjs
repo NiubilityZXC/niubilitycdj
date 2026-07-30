@@ -65,6 +65,29 @@ const renderLinks = (links) => {
       </section>`;
 };
 
+const renderMediaGroups = (groups) => {
+  if (!groups?.length) return "";
+
+  return groups
+    .map((group) => {
+      const staticGroup = {
+        ...group,
+        items: group.items.map((item) => ({
+          ...item,
+          assetBase: item.assetBase.replace(/^\/site\/media/, "../../media"),
+          videos: item.videos?.map((video) => ({
+            ...video,
+            source: video.source.replace(/^\/site\/media/, "../../media"),
+            poster: video.poster.replace(/^\/site\/media/, "../../media"),
+          })),
+        })),
+      };
+
+      return `<section class="detail-media-band" data-media-preview="${escapeHtml(JSON.stringify(staticGroup))}"></section>`;
+    })
+    .join("\n");
+};
+
 const renderPage = (detail, index) => {
   const previous = details[(index - 1 + details.length) % details.length];
   const next = details[(index + 1) % details.length];
@@ -78,16 +101,16 @@ const renderPage = (detail, index) => {
     <meta name="description" content="${escapeHtml(detail.summary)}" />
     <meta name="theme-color" content="#0c0c0c" />
     <title>${escapeHtml(detail.title)} | 周学聪</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/details/styles.css?v=20260720b" />
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../styles.css?v=20260730media" />
   </head>
   <body>
     <main class="detail-page detail-accent-${detail.accent}">
       <header class="detail-header">
-        <a class="detail-brand" href="/" aria-label="返回周学聪个人网站首页"><span>XZ</span><strong>周学聪</strong></a>
+        <a class="detail-brand" href="../../" aria-label="返回周学聪个人网站首页"><span>XZ</span><strong>周学聪</strong></a>
         <div class="detail-header-actions">
-          <a class="detail-resume" href="/xuecong-zhou-cv-cn.pdf" download="周学聪-中文简历.pdf"><span aria-hidden="true">↓</span>下载简历</a>
-          <a class="detail-back" href="/"><span aria-hidden="true">←</span>返回首页</a>
+          <a class="detail-resume" href="../../xuecong-zhou-cv-cn.pdf" download="周学聪-中文简历.pdf"><span aria-hidden="true">↓</span>下载简历</a>
+          <a class="detail-back" href="../../"><span aria-hidden="true">←</span>返回首页</a>
         </div>
       </header>
 
@@ -112,11 +135,13 @@ const renderPage = (detail, index) => {
         <div class="detail-sections">${renderSections(detail.sections)}</div>
       </section>
 
+      ${renderMediaGroups(detail.mediaGroups)}
+
       ${renderLinks(detail.links)}
 
       <nav class="detail-pagination" aria-label="浏览其他项目和经历">
-        <a href="/details/${previous.slug}"><span>← 上一个</span><strong>${escapeHtml(previous.title)}</strong></a>
-        <a href="/details/${next.slug}"><span>下一个 →</span><strong>${escapeHtml(next.title)}</strong></a>
+        <a href="../${previous.slug}/"><span>← 上一个</span><strong>${escapeHtml(previous.title)}</strong></a>
+        <a href="../${next.slug}/"><span>下一个 →</span><strong>${escapeHtml(next.title)}</strong></a>
       </nav>
 
       <footer class="detail-footer">
@@ -124,6 +149,7 @@ const renderPage = (detail, index) => {
         <a href="mailto:xzhou455@gatech.edu">xzhou455@gatech.edu</a>
       </footer>
     </main>
+    <script src="../preview.js?v=20260730media" defer></script>
   </body>
 </html>
 `;
