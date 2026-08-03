@@ -1,9 +1,6 @@
 (() => {
   "use strict";
 
-  const RIGHTS_NOTICE =
-    "除了简历可以下载转发，此网站任何资料、视频、文章以及任何形式的文件版权（包括简历版权）均归 Xuecong Zhou 所有。禁止转发、修改、使用、发表或商用。如有任何违规，将依法追究法律责任。";
-
   const create = (tag, className, text) => {
     const element = document.createElement(tag);
     if (className) element.className = className;
@@ -131,12 +128,6 @@
       );
       let page = 1;
 
-      const rights = create("p", "detail-rights-notice");
-      rights.append(
-        create("strong", "", "版权声明"),
-        create("span", "", RIGHTS_NOTICE),
-      );
-
       const intro = create("div", "detail-media-intro");
       const eyebrow = create("p", "", group.eyebrow);
       const heading = create("h2", "", group.title);
@@ -146,7 +137,7 @@
       root.setAttribute("aria-labelledby", heading.id);
 
       const tool = create("div", "detail-media-tool");
-      root.append(rights, intro, tool);
+      root.append(intro, tool);
 
       const buildTool = () => {
         const item = group.items[activeItemIndex];

@@ -8,6 +8,9 @@ type DetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+const RIGHTS_NOTICE =
+  "除了简历可以下载转发，此网站任何资料、视频、文章以及任何形式的文件版权（包括简历版权）均归 Xuecong Zhou 所有。禁止转发、修改、使用、发表或商用。如有任何违规，将依法追究法律责任。";
+
 export function generateStaticParams() {
   return details.map(({ slug }) => ({ slug }));
 }
@@ -84,8 +87,13 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
       <div className="detail-ticker" aria-hidden="true">
         <div>
-          {[...detail.tags, ...detail.tags].map((tag, index) => (
-            <span key={`${tag}-${index}`}>{tag}</span>
+          {[...detail.tags, RIGHTS_NOTICE, ...detail.tags, RIGHTS_NOTICE].map((tag, index) => (
+            <span
+              className={tag === RIGHTS_NOTICE ? "detail-ticker-rights" : undefined}
+              key={`${tag}-${index}`}
+            >
+              {tag}
+            </span>
           ))}
         </div>
       </div>

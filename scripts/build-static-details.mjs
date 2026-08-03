@@ -23,6 +23,9 @@ const escapeHtml = (value) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
+const RIGHTS_NOTICE =
+  "除了简历可以下载转发，此网站任何资料、视频、文章以及任何形式的文件版权（包括简历版权）均归 Xuecong Zhou 所有。禁止转发、修改、使用、发表或商用。如有任何违规，将依法追究法律责任。";
+
 const renderSections = (sections) =>
   sections
     .map(
@@ -91,7 +94,12 @@ const renderMediaGroups = (groups) => {
 const renderPage = (detail, index) => {
   const previous = details[(index - 1 + details.length) % details.length];
   const next = details[(index + 1) % details.length];
-  const repeatedTags = [...detail.tags, ...detail.tags];
+  const repeatedTags = [
+    ...detail.tags,
+    RIGHTS_NOTICE,
+    ...detail.tags,
+    RIGHTS_NOTICE,
+  ];
 
   return `<!doctype html>
 <html lang="zh-CN">
@@ -102,7 +110,7 @@ const renderPage = (detail, index) => {
     <meta name="theme-color" content="#0c0c0c" />
     <title>${escapeHtml(detail.title)} | 周学聪</title>
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="../styles.css?v=20260803rights" />
+    <link rel="stylesheet" href="../styles.css?v=20260803ticker" />
   </head>
   <body>
     <main class="detail-page detail-accent-${detail.accent}">
@@ -126,7 +134,7 @@ const renderPage = (detail, index) => {
         </dl>
       </section>
 
-      <div class="detail-ticker" aria-hidden="true"><div>${repeatedTags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div></div>
+      <div class="detail-ticker" aria-hidden="true"><div>${repeatedTags.map((tag) => `<span${tag === RIGHTS_NOTICE ? ' class="detail-ticker-rights"' : ""}>${escapeHtml(tag)}</span>`).join("")}</div></div>
 
       <section class="detail-content" aria-label="${escapeHtml(detail.title)}详细信息">
         <aside class="detail-aside">
@@ -149,7 +157,7 @@ const renderPage = (detail, index) => {
         <a href="mailto:xzhou455@gatech.edu">xzhou455@gatech.edu</a>
       </footer>
     </main>
-    <script src="../preview.js?v=20260803rights" defer></script>
+    <script src="../preview.js?v=20260803ticker" defer></script>
   </body>
 </html>
 `;

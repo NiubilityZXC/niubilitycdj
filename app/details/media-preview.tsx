@@ -10,9 +10,6 @@ type MediaPreviewProps = {
 const getPageSource = (item: DetailMediaItem, page: number) =>
   `${item.assetBase}/${item.assetPrefix}-${String(page).padStart(2, "0")}.webp`;
 
-const RIGHTS_NOTICE =
-  "除了简历可以下载转发，此网站任何资料、视频、文章以及任何形式的文件版权（包括简历版权）均归 Xuecong Zhou 所有。禁止转发、修改、使用、发表或商用。如有任何违规，将依法追究法律责任。";
-
 function ProtectedVideo({ video }: { video: DetailMediaVideo }) {
   const playerRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -104,11 +101,6 @@ function MediaGroupPreview({ group }: { group: DetailMediaGroup }) {
 
   return (
     <section className="detail-media-band" aria-labelledby={`${item.id}-group-title`}>
-      <p className="detail-rights-notice">
-        <strong>版权声明</strong>
-        <span>{RIGHTS_NOTICE}</span>
-      </p>
-
       <div className="detail-media-intro">
         <p>{group.eyebrow}</p>
         <h2 id={`${item.id}-group-title`}>{group.title}</h2>
