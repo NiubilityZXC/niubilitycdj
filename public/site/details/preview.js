@@ -214,7 +214,39 @@
         const mainImage = document.createElement("img");
         mainImage.draggable = false;
         mainImage.addEventListener("contextmenu", (event) => event.preventDefault());
-        stage.append(mainImage);
+
+        const renderStage = () => {
+          const pageVideos = (item.videos ?? []).filter((video) => video.slide === page);
+          stage.replaceChildren();
+          stage.classList.toggle("has-video", pageVideos.length > 0);
+
+          if (!pageVideos.length) {
+            mainImage.src = pageSource(item, page);
+            mainImage.alt = `${item.title}，第 ${page} 页`;
+            stage.append(mainImage);
+            return;
+          }
+
+          const videoGrid = create(
+            "div",
+            pageVideos.length > 1
+              ? "detail-slide-video-grid is-multiple"
+              : "detail-slide-video-grid",
+          );
+          videoGrid.setAttribute("aria-label", `${item.title}第 ${page} 页中的视频`);
+          pageVideos.forEach((video) => {
+            const article = create("article", "detail-video detail-slide-video");
+            const copy = create("div");
+            copy.append(
+              create("span", "", `第 ${page} 页视频`),
+              create("strong", "", video.title),
+              create("small", "", video.duration),
+            );
+            article.append(createProtectedVideo(video), copy);
+            videoGrid.append(article);
+          });
+          stage.append(videoGrid);
+        };
 
         const thumbnails = create("div", "detail-thumbnail-strip");
         thumbnails.setAttribute("aria-label", "选择预览页");
@@ -222,8 +254,7 @@
 
         const setPage = (nextPage, centerThumbnail = false) => {
           page = Math.min(Math.max(nextPage, 1), item.pageCount);
-          mainImage.src = pageSource(item, page);
-          mainImage.alt = `${item.title}，第 ${page} 页`;
+          renderStage();
           counter.textContent = `${String(page).padStart(2, "0")} / ${String(item.pageCount).padStart(2, "0")}`;
           previous.disabled = page === 1;
           next.disabled = page === item.pageCount;
@@ -241,7 +272,12 @@
         for (let index = 1; index <= item.pageCount; index += 1) {
           const button = create("button");
           button.type = "button";
-          button.setAttribute("aria-label", `查看第 ${index} 页`);
+          const hasVideo = (item.videos ?? []).some((video) => video.slide === index);
+          if (hasVideo) button.classList.add("has-video");
+          button.setAttribute(
+            "aria-label",
+            `查看第 ${index} 页${hasVideo ? "，含可播放视频" : ""}`,
+          );
           const image = document.createElement("img");
           image.alt = "";
           image.draggable = false;

@@ -265,7 +265,7 @@ ul {
   top: 0;
   left: 0;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   width: 100%;
   height: var(--header-height);
@@ -348,6 +348,7 @@ ul {
 .header-contact {
   display: inline-flex;
   align-items: center;
+  justify-self: end;
   justify-content: center;
   gap: 8px;
   min-width: 112px;
@@ -453,26 +454,47 @@ ul {
   top: calc(var(--header-height) + 17px);
   right: var(--page-pad);
   left: var(--page-pad);
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
   font-size: 0.68rem;
   font-weight: 650;
   text-transform: uppercase;
 }
 
-.hero-topline span:last-child {
+.hero-location {
+  justify-self: center;
+}
+
+.hero-status {
   display: inline-flex;
+  justify-self: end;
   align-items: center;
   gap: 7px;
 }
 
 .hero-github-link {
+  display: inline-flex;
+  min-width: 0;
   max-width: 310px;
+  justify-self: start;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  text-transform: none;
+  transition: color 180ms ease;
+}
+
+.hero-github-link > span {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-transform: none;
   white-space: nowrap;
-  transition: color 180ms ease;
+}
+
+.hero-github-link > i {
+  flex: 0 0 auto;
+  font-size: 0.9rem;
 }
 
 .hero-github-link:hover,
@@ -480,9 +502,10 @@ ul {
   color: var(--yellow);
 }
 
-.hero-topline i {
+.hero-status-dot {
   width: 7px;
   height: 7px;
+  flex: 0 0 auto;
   border-radius: 50%;
   background: var(--teal);
   box-shadow: 0 0 0 5px rgba(48, 198, 176, 0.18);
@@ -534,7 +557,7 @@ ul {
   position: relative;
   z-index: 4;
   display: grid;
-  grid-template-columns: minmax(250px, 420px) 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: end;
   gap: 32px;
   width: 100%;
@@ -551,6 +574,8 @@ ul {
   display: grid;
   gap: 13px;
   align-self: end;
+  justify-self: start;
+  width: min(100%, 420px);
 }
 
 .hero-resume {
@@ -596,6 +621,7 @@ ul {
   background: var(--yellow);
   font-size: 0.86rem;
   font-weight: 800;
+  justify-self: end;
   transition: color 220ms ease, background 220ms ease;
 }
 
@@ -1897,7 +1923,8 @@ ul {
   }
 
   .hero { min-height: 92svh; padding-bottom: 22px; }
-  .hero-topline span:nth-child(2) { display: none; }
+  .hero-topline { grid-template-columns: minmax(0, 1fr) auto; }
+  .hero-location { display: none; }
   .hero-title-wrap { top: 22%; }
   .hero h1 { font-size: 7.4rem; }
   .hero-bottom { grid-template-columns: 1fr auto; }

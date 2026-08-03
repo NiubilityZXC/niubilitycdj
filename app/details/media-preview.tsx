@@ -83,6 +83,7 @@ function MediaGroupPreview({ group }: { group: DetailMediaGroup }) {
   const viewerRef = useRef<HTMLDivElement>(null);
   const item = group.items[activeItemIndex];
   const currentSource = getPageSource(item, page);
+  const pageVideos = item.videos?.filter((video) => video.slide === page) ?? [];
 
   const selectItem = (index: number) => {
     setActiveItemIndex(index);
@@ -190,25 +191,54 @@ function MediaGroupPreview({ group }: { group: DetailMediaGroup }) {
             </div>
           </div>
 
-          <div className="detail-page-stage" onContextMenu={(event) => event.preventDefault()}>
-            <img
-              alt={`${item.title}，第 ${page} 页`}
-              draggable={false}
-              key={currentSource}
-              src={currentSource}
-            />
+          <div
+            className={`detail-page-stage${pageVideos.length ? " has-video" : ""}`}
+            onContextMenu={(event) => event.preventDefault()}
+          >
+            {pageVideos.length ? (
+              <div
+                className={`detail-slide-video-grid${pageVideos.length > 1 ? " is-multiple" : ""}`}
+                aria-label={`${item.title}第 ${page} 页中的视频`}
+              >
+                {pageVideos.map((video) => (
+                  <article
+                    className="detail-video detail-slide-video"
+                    key={`slide-${video.source}`}
+                  >
+                    <ProtectedVideo video={video} />
+                    <div>
+                      <span>第 {page} 页视频</span>
+                      <strong>{video.title}</strong>
+                      <small>{video.duration}</small>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <img
+                alt={`${item.title}，第 ${page} 页`}
+                draggable={false}
+                key={currentSource}
+                src={currentSource}
+              />
+            )}
           </div>
 
           <div className="detail-thumbnail-strip" aria-label="选择预览页">
             {Array.from({ length: item.pageCount }, (_, index) => {
               const thumbnailPage = index + 1;
+              const hasVideo =
+                item.videos?.some((video) => video.slide === thumbnailPage) ?? false;
               return (
                 <button
-                  className={thumbnailPage === page ? "is-active" : undefined}
+                  className={
+                    `${thumbnailPage === page ? "is-active" : ""}${hasVideo ? " has-video" : ""}`.trim() ||
+                    undefined
+                  }
                   key={thumbnailPage}
                   onClick={() => setPage(thumbnailPage)}
                   type="button"
-                  aria-label={`查看第 ${thumbnailPage} 页`}
+                  aria-label={`查看第 ${thumbnailPage} 页${hasVideo ? "，含可播放视频" : ""}`}
                   aria-current={thumbnailPage === page ? "page" : undefined}
                 >
                   <img

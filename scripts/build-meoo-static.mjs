@@ -102,7 +102,7 @@ replaceOnce(
   "Phosphor stylesheet",
 );
 replaceOnce(
-  '<link rel="stylesheet" href="./styles.css?v=20260803rights" />',
+  '<link rel="stylesheet" href="./styles.css?v=20260803video" />',
   `<style>\n${escapeStyle(phosphorCss)}\n${escapeStyle(mainCss)}\n</style>
     <style id="meoo-detail-styles" media="not all">
 ${escapeStyle(detailCss)}
@@ -150,7 +150,7 @@ replaceOnce(
   "ScrollTrigger script",
 );
 replaceOnce(
-  '<script src="./script.js?v=20260803rights" defer></script>',
+  '<script src="./script.js?v=20260803video" defer></script>',
   `<script>${escapeScript(readText("script.js"))}</script>
     <script>${escapeScript(detailPreviewScript)}</script>
     <script>
