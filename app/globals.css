@@ -12,6 +12,27 @@ body {
   font-family: "Manrope Variable", "Microsoft YaHei", "PingFang SC", sans-serif;
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body::after {
+  position: fixed;
+  z-index: 9998;
+  bottom: 12px;
+  left: 14px;
+  padding: 5px 7px;
+  color: rgba(255, 255, 255, 0.68);
+  content: "© Xuecong Zhou · 禁止转载";
+  pointer-events: none;
+  background: rgba(12, 12, 12, 0.5);
+  font-size: 0.52rem;
+  font-weight: 750;
+}
+
+body:has(.site-frame-shell)::after {
+  display: none;
 }
 
 *,
@@ -25,6 +46,18 @@ a {
   text-decoration: none;
 }
 
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img,
+video {
+  -webkit-user-drag: none;
+}
+
 ::selection {
   color: #0c0c0c;
   background: #f3ca52;
@@ -33,6 +66,31 @@ a {
 :focus-visible {
   outline: 2px solid #f3ca52;
   outline-offset: 4px;
+}
+
+.content-protection-notice {
+  position: fixed;
+  z-index: 10000;
+  right: 20px;
+  bottom: 20px;
+  max-width: min(420px, calc(100vw - 40px));
+  padding: 13px 16px;
+  color: #f5f7f4;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(12, 12, 12, 0.94);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.3);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.55;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.content-protection-notice.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .site-frame-shell {
@@ -418,6 +476,30 @@ a {
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+.detail-rights-notice {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 22px;
+  margin: 0 0 72px;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.76rem;
+  line-height: 1.75;
+}
+
+.detail-rights-notice strong {
+  color: var(--detail-accent);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.detail-rights-notice span {
+  max-width: 1000px;
+  color: rgba(245, 247, 244, 0.78);
+  font-weight: 650;
+}
+
 .detail-media-intro {
   display: grid;
   grid-template-columns: minmax(180px, 0.7fr) minmax(320px, 1.3fr);
@@ -519,12 +601,27 @@ a {
 }
 
 .detail-video-frame {
+  position: relative;
   display: grid;
   min-height: 0;
   place-items: center;
   overflow: hidden;
   background: #050505;
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.detail-video-frame::after {
+  position: absolute;
+  z-index: 4;
+  top: 14px;
+  right: 14px;
+  padding: 6px 8px;
+  color: rgba(255, 255, 255, 0.86);
+  content: "© Xuecong Zhou · 禁止转载";
+  pointer-events: none;
+  background: rgba(5, 5, 5, 0.72);
+  font-size: 0.56rem;
+  font-weight: 750;
 }
 
 .detail-video video {
@@ -538,6 +635,65 @@ a {
 
 .detail-video:not(.detail-video-featured) video {
   max-height: 480px;
+}
+
+.detail-video-play {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  place-items: center;
+  color: #0c0c0c;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 50%;
+  background: var(--detail-accent);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.34);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.detail-video-play span {
+  margin-left: 4px;
+  font-size: 1.48rem;
+  line-height: 1;
+}
+
+.detail-video-play:hover,
+.detail-video-play:focus-visible {
+  background: #f5f7f4;
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.detail-video-frame.is-playing .detail-video-play {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.detail-video-frame.has-error .detail-video-play {
+  color: #f5f7f4;
+  background: #ff6849;
+}
+
+.detail-video-error {
+  position: absolute;
+  z-index: 5;
+  right: 16px;
+  bottom: 16px;
+  max-width: calc(100% - 32px);
+  padding: 8px 10px;
+  color: #f5f7f4;
+  background: rgba(12, 12, 12, 0.9);
+  font-size: 0.64rem;
+  font-weight: 700;
+}
+
+.detail-video-error:empty {
+  display: none;
 }
 
 .detail-video > div:last-child {
@@ -644,6 +800,7 @@ a {
 }
 
 .detail-page-stage {
+  position: relative;
   display: grid;
   height: min(76vh, 860px);
   min-height: 500px;
@@ -657,7 +814,25 @@ a {
   background-size: 32px 32px;
 }
 
+.detail-page-stage::after {
+  z-index: 3;
+  grid-area: 1 / 1;
+  align-self: start;
+  justify-self: end;
+  position: sticky;
+  top: 14px;
+  margin: 0 0 -32px;
+  padding: 6px 8px;
+  color: rgba(255, 255, 255, 0.86);
+  content: "© Xuecong Zhou · 禁止转载";
+  pointer-events: none;
+  background: rgba(5, 5, 5, 0.74);
+  font-size: 0.56rem;
+  font-weight: 750;
+}
+
 .detail-page-stage img {
+  grid-area: 1 / 1;
   display: block;
   max-width: 100%;
   max-height: 100%;
@@ -1037,6 +1212,13 @@ a {
     padding: 76px 20px 90px;
   }
 
+  .detail-rights-notice {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 48px;
+    font-size: 0.7rem;
+  }
+
   .detail-media-intro {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -1081,6 +1263,11 @@ a {
   .detail-video video,
   .detail-video:not(.detail-video-featured) video {
     max-height: 64vh;
+  }
+
+  .detail-video-play {
+    width: 62px;
+    height: 62px;
   }
 
   .detail-document-viewer {
@@ -1158,6 +1345,25 @@ a {
     justify-content: center;
     gap: 10px;
     padding: 0 20px;
+  }
+}
+
+@media print {
+  body::after {
+    display: none !important;
+  }
+
+  body > * {
+    display: none !important;
+  }
+
+  body::before {
+    display: block;
+    padding: 40px;
+    color: #000;
+    content: "除简历外，本站内容不提供打印或复制。版权归 Xuecong Zhou 所有。";
+    background: #fff;
+    font: 700 16px/1.7 sans-serif;
   }
 }
 

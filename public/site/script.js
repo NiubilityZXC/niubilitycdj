@@ -65,6 +65,46 @@
   const year = $("[data-year]");
   if (year) year.textContent = String(new Date().getFullYear());
 
+  const setupContentProtection = () => {
+    if (window.__portfolioContentProtectionReady) return;
+    window.__portfolioContentProtectionReady = true;
+
+    const notice = document.createElement("div");
+    notice.className = "content-protection-notice";
+    notice.setAttribute("role", "status");
+    notice.setAttribute("aria-live", "polite");
+    document.body.append(notice);
+    let noticeTimer = 0;
+
+    const showNotice = (message) => {
+      window.clearTimeout(noticeTimer);
+      notice.textContent = message;
+      notice.classList.add("is-visible");
+      noticeTimer = window.setTimeout(() => notice.classList.remove("is-visible"), 2600);
+    };
+
+    const blockContentAction = (event) => {
+      event.preventDefault();
+      showNotice("除简历下载外，本站内容不提供复制、保存或打印。");
+    };
+
+    document.addEventListener("contextmenu", blockContentAction, true);
+    document.addEventListener("copy", blockContentAction, true);
+    document.addEventListener("cut", blockContentAction, true);
+    document.addEventListener("dragstart", blockContentAction, true);
+    document.addEventListener("keydown", (event) => {
+      const key = event.key.toLowerCase();
+      const blockedShortcut = (event.ctrlKey || event.metaKey) && ["a", "c", "p", "s", "u", "x"].includes(key);
+      if (blockedShortcut) blockContentAction(event);
+      if (event.key === "PrintScreen") {
+        event.preventDefault();
+        showNotice("网页无法控制系统截图，页面内容已加入版权水印。");
+      }
+    }, true);
+  };
+
+  setupContentProtection();
+
   const header = $("[data-header]");
   const progressBar = $("[data-page-progress]");
   const menuButton = $(".menu-toggle");
@@ -265,6 +305,49 @@
   };
 
   setupHeroVideo();
+
+  const setupProjectVideos = () => {
+    $$(".project-media-video").forEach((frame) => {
+      if (frame.dataset.playerReady === "true") return;
+      frame.dataset.playerReady = "true";
+      const video = $("video", frame);
+      const playButton = $(".project-video-play", frame);
+      if (!video || !playButton) return;
+
+      const showPausedState = () => frame.classList.remove("is-playing");
+      video.addEventListener("play", () => {
+        frame.classList.add("is-playing");
+        frame.classList.remove("has-error");
+      });
+      video.addEventListener("pause", showPausedState);
+      video.addEventListener("ended", showPausedState);
+      video.addEventListener("loadeddata", () => frame.classList.remove("has-error"));
+      video.addEventListener("error", () => {
+        showPausedState();
+        frame.classList.add("has-error");
+        playButton.setAttribute("aria-label", "视频加载失败，点击重试");
+        playButton.setAttribute("title", "视频加载失败，点击重试");
+      });
+
+      playButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        frame.classList.remove("has-error");
+        playButton.setAttribute("aria-label", "播放 VisionRL-KUKA 演示视频");
+        playButton.setAttribute("title", "播放视频");
+        try {
+          if (video.readyState === 0) video.load();
+          await video.play();
+        } catch {
+          frame.classList.add("has-error");
+          playButton.setAttribute("aria-label", "视频加载失败，点击重试");
+          playButton.setAttribute("title", "视频加载失败，点击重试");
+        }
+      });
+    });
+  };
+
+  setupProjectVideos();
 
   const setupProjectInteractions = () => {
     if (reduceMotion || !window.matchMedia("(pointer: fine)").matches) return;

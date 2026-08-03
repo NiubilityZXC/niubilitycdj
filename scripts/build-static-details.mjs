@@ -102,7 +102,7 @@ const renderPage = (detail, index) => {
     <meta name="theme-color" content="#0c0c0c" />
     <title>${escapeHtml(detail.title)} | 周学聪</title>
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="../styles.css?v=20260730media" />
+    <link rel="stylesheet" href="../styles.css?v=20260803rights" />
   </head>
   <body>
     <main class="detail-page detail-accent-${detail.accent}">
@@ -149,7 +149,7 @@ const renderPage = (detail, index) => {
         <a href="mailto:xzhou455@gatech.edu">xzhou455@gatech.edu</a>
       </footer>
     </main>
-    <script src="../preview.js?v=20260730media" defer></script>
+    <script src="../preview.js?v=20260803rights" defer></script>
   </body>
 </html>
 `;

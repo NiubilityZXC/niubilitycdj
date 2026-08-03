@@ -44,10 +44,27 @@ body {
   font-weight: 450;
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 body.is-loading {
   overflow: hidden;
+}
+
+body::after {
+  position: fixed;
+  z-index: 9998;
+  bottom: 12px;
+  left: 14px;
+  padding: 5px 7px;
+  color: rgba(255, 255, 255, 0.68);
+  content: "© Xuecong Zhou · 禁止转载";
+  pointer-events: none;
+  background: rgba(12, 12, 12, 0.5);
+  font-size: 0.52rem;
+  font-weight: 750;
 }
 
 button,
@@ -58,6 +75,18 @@ a {
 
 a {
   text-decoration: none;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img,
+video {
+  -webkit-user-drag: none;
 }
 
 button {
@@ -437,6 +466,20 @@ ul {
   gap: 7px;
 }
 
+.hero-github-link {
+  max-width: 310px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+  transition: color 180ms ease;
+}
+
+.hero-github-link:hover,
+.hero-github-link:focus-visible {
+  color: var(--yellow);
+}
+
 .hero-topline i {
   width: 7px;
   height: 7px;
@@ -569,20 +612,25 @@ ul {
   position: absolute;
   z-index: 4;
   right: var(--page-pad);
-  top: 49%;
+  top: 43%;
   display: grid;
-  gap: 8px;
+  width: 390px;
+  gap: 10px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.58);
   text-align: right;
 }
 
 .hero-caption span {
-  opacity: 0.7;
+  color: var(--yellow);
   font-size: 0.62rem;
+  font-weight: 800;
 }
 
 .hero-caption strong {
-  font-size: 0.88rem;
-  line-height: 1.5;
+  font-size: 0.74rem;
+  font-weight: 650;
+  line-height: 1.72;
 }
 
 .project-reel {
@@ -1151,47 +1199,126 @@ ul {
 }
 
 .project-media-video {
+  z-index: 8;
   isolation: isolate;
   background: #050505;
 }
 
+.project-media-video::before {
+  position: absolute;
+  z-index: 3;
+  top: 14px;
+  right: 14px;
+  padding: 6px 8px;
+  color: rgba(255, 255, 255, 0.86);
+  content: "© Xuecong Zhou · 禁止转载";
+  pointer-events: none;
+  background: rgba(5, 5, 5, 0.72);
+  font-size: 0.54rem;
+  font-weight: 750;
+}
+
 .project-media-video::after {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   inset: 0;
   content: "";
   pointer-events: none;
-  background:
-    linear-gradient(to top, rgba(5, 5, 5, 0.72), transparent 34%),
-    linear-gradient(90deg, rgba(255, 104, 73, 0.16), transparent 45%);
+  background: linear-gradient(to top, rgba(5, 5, 5, 0.3), transparent 24%);
 }
 
 .project-media-video video {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  pointer-events: auto;
   object-fit: cover;
   object-position: center;
-  transform: scale(1.01);
-  transition: transform 420ms var(--ease), filter 240ms ease;
+  transition: filter 240ms ease;
 }
 
 .project-card:hover .project-media-video video {
   filter: saturate(1.08) contrast(1.04);
-  transform: scale(1.045);
+}
+
+.project-video-play {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 66px;
+  height: 66px;
+  padding: 0;
+  place-items: center;
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: opacity 180ms ease, transform 180ms var(--ease), background 180ms ease;
+}
+
+.project-video-play i {
+  margin-left: 3px;
+  font-size: 1.42rem;
+}
+
+.project-video-play:hover,
+.project-video-play:focus-visible {
+  background: var(--paper);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.project-media-video.is-playing .project-video-play {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project-media-video.has-error .project-video-play {
+  color: var(--paper);
+  background: var(--coral);
 }
 
 .project-media figcaption {
   position: absolute;
-  z-index: 2;
-  right: 16px;
-  bottom: 16px;
+  z-index: 3;
+  top: 14px;
+  left: 14px;
   padding: 8px 10px;
   color: var(--paper);
   background: var(--ink);
   font-size: 0.62rem;
   font-weight: 750;
+}
+
+.content-protection-notice {
+  position: fixed;
+  z-index: 10000;
+  right: 20px;
+  bottom: 20px;
+  max-width: min(420px, calc(100vw - 40px));
+  padding: 13px 16px;
+  color: var(--paper);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(12, 12, 12, 0.94);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.3);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.55;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.content-protection-notice.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .robot-visual {
@@ -1775,7 +1902,7 @@ ul {
   .hero h1 { font-size: 7.4rem; }
   .hero-bottom { grid-template-columns: 1fr auto; }
   .hero-coordinates { display: none; }
-  .hero-caption { top: 57%; }
+  .hero-caption { top: 51%; width: 350px; }
 
   .display-heading { font-size: 7rem; }
   .about-copy { max-width: 650px; font-size: 1.3rem; }
@@ -1821,7 +1948,7 @@ ul {
   .hero-video-motion { top: -2%; bottom: -4%; }
   .hero-video { object-position: center center; }
   .hero-topline { top: calc(var(--header-height) + 14px); font-size: 0.58rem; }
-  .hero-topline span:first-child { max-width: 155px; }
+  .hero-github-link { max-width: 180px; font-size: 0.54rem; }
   .hero-title-wrap { top: 23%; }
   .hero-kicker { font-size: 0.68rem; }
   .hero h1 { font-size: 4.6rem; line-height: 0.92; }
@@ -1829,8 +1956,14 @@ ul {
   .hero-bottom { grid-template-columns: 1fr; gap: 18px; }
   .hero-summary { max-width: 260px; font-size: 0.82rem; line-height: 1.55; }
   .hero-contact { width: 100%; height: 52px; }
-  .hero-caption { top: 60%; right: 16px; }
-  .hero-caption strong { font-size: 0.72rem; }
+  .hero-caption {
+    top: 50%;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    text-align: left;
+  }
+  .hero-caption strong { font-size: 0.64rem; line-height: 1.58; }
 
   .project-reel { gap: 8px; padding: 64px 0 78px; }
   .reel-row { gap: 8px; }
@@ -1882,6 +2015,7 @@ ul {
   .project-description > p { font-size: 0.92rem; }
   .project-media { aspect-ratio: 4 / 3; }
   .project-card-cta { padding: 8px 10px; }
+  .project-video-play { width: 58px; height: 58px; }
   .robot-icon { font-size: 7rem; }
   .reward-graph { gap: 5px; padding: 12px; }
   .social-visual { padding: 24px; }
@@ -1922,6 +2056,25 @@ ul {
   .contact-button { width: 100%; min-width: 0; }
   .site-footer { grid-template-columns: 1fr auto; gap: 12px; }
   .site-footer p:last-child { display: none; }
+}
+
+@media print {
+  body::after {
+    display: none !important;
+  }
+
+  body > * {
+    display: none !important;
+  }
+
+  body::before {
+    display: block;
+    padding: 40px;
+    color: #000;
+    content: "除简历外，本站内容不提供打印或复制。版权归 Xuecong Zhou 所有。";
+    background: #fff;
+    font: 700 16px/1.7 sans-serif;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

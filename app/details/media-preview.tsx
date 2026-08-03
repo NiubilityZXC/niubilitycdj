@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { DetailMediaGroup, DetailMediaItem } from "./data";
+import type { DetailMediaGroup, DetailMediaItem, DetailMediaVideo } from "./data";
 
 type MediaPreviewProps = {
   groups: DetailMediaGroup[];
@@ -9,6 +9,72 @@ type MediaPreviewProps = {
 
 const getPageSource = (item: DetailMediaItem, page: number) =>
   `${item.assetBase}/${item.assetPrefix}-${String(page).padStart(2, "0")}.webp`;
+
+const RIGHTS_NOTICE =
+  "除了简历可以下载转发，此网站任何资料、视频、文章以及任何形式的文件版权（包括简历版权）均归 Xuecong Zhou 所有。禁止转发、修改、使用、发表或商用。如有任何违规，将依法追究法律责任。";
+
+function ProtectedVideo({ video }: { video: DetailMediaVideo }) {
+  const playerRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  const startPlayback = async () => {
+    const player = playerRef.current;
+    if (!player) return;
+
+    try {
+      setHasError(false);
+      if (player.readyState === 0) player.load();
+      await player.play();
+    } catch {
+      setHasError(true);
+      setIsPlaying(false);
+    }
+  };
+
+  return (
+    <div
+      className={`detail-video-frame${isPlaying ? " is-playing" : ""}${hasError ? " has-error" : ""}`}
+    >
+      <video
+        ref={playerRef}
+        controls
+        controlsList="nodownload noremoteplayback"
+        disablePictureInPicture
+        disableRemotePlayback
+        onContextMenu={(event) => event.preventDefault()}
+        onEnded={() => setIsPlaying(false)}
+        onError={() => {
+          setHasError(true);
+          setIsPlaying(false);
+        }}
+        onLoadedData={() => setHasError(false)}
+        onPause={() => setIsPlaying(false)}
+        onPlay={() => {
+          setHasError(false);
+          setIsPlaying(true);
+        }}
+        playsInline
+        poster={video.poster}
+        preload="auto"
+      >
+        <source src={video.source} type="video/mp4" />
+      </video>
+      <button
+        className="detail-video-play"
+        type="button"
+        onClick={startPlayback}
+        aria-label={hasError ? "视频加载失败，点击重试" : `播放${video.title}`}
+        title={hasError ? "视频加载失败，点击重试" : "播放视频"}
+      >
+        <span aria-hidden="true">▶</span>
+      </button>
+      <span className="detail-video-error" role="status" aria-live="polite">
+        {hasError ? "视频加载失败，请刷新页面后重试。" : ""}
+      </span>
+    </div>
+  );
+}
 
 function MediaGroupPreview({ group }: { group: DetailMediaGroup }) {
   const initialItem = Math.min(
@@ -38,6 +104,11 @@ function MediaGroupPreview({ group }: { group: DetailMediaGroup }) {
 
   return (
     <section className="detail-media-band" aria-labelledby={`${item.id}-group-title`}>
+      <p className="detail-rights-notice">
+        <strong>版权声明</strong>
+        <span>{RIGHTS_NOTICE}</span>
+      </p>
+
       <div className="detail-media-intro">
         <p>{group.eyebrow}</p>
         <h2 id={`${item.id}-group-title`}>{group.title}</h2>
@@ -69,19 +140,7 @@ function MediaGroupPreview({ group }: { group: DetailMediaGroup }) {
                 className={index === 0 ? "detail-video detail-video-featured" : "detail-video"}
                 key={video.source}
               >
-                <div className="detail-video-frame">
-                  <video
-                    controls
-                    controlsList="nodownload noremoteplayback"
-                    disablePictureInPicture
-                    onContextMenu={(event) => event.preventDefault()}
-                    playsInline
-                    poster={video.poster}
-                    preload="metadata"
-                  >
-                    <source src={video.source} type="video/mp4" />
-                  </video>
-                </div>
+                <ProtectedVideo video={video} />
                 <div>
                   <span>第 {video.slide} 页视频</span>
                   <strong>{video.title}</strong>
