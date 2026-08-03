@@ -9,7 +9,11 @@
   const pageSource = (item, page) =>
     `${item.assetBase}/${item.assetPrefix}-${String(page).padStart(2, "0")}.webp`;
 
-  document.querySelectorAll("[data-media-preview]").forEach((root, groupIndex) => {
+  const initDetailMediaPreviews = (scope = document) => {
+    scope.querySelectorAll("[data-media-preview]").forEach((root, groupIndex) => {
+    if (root.dataset.mediaReady === "true") return;
+    root.dataset.mediaReady = "true";
+
     const group = JSON.parse(root.dataset.mediaPreview);
     let activeItemIndex = Math.min(
       Math.max(Number(group.defaultItemIndex ?? 0), 0),
@@ -170,6 +174,17 @@
       setPage(1);
     };
 
-    buildTool();
-  });
+      buildTool();
+    });
+  };
+
+  window.initDetailMediaPreviews = initDetailMediaPreviews;
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => initDetailMediaPreviews(), {
+      once: true,
+    });
+  } else {
+    initDetailMediaPreviews();
+  }
 })();
