@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { detailBySlug, details } from "../data";
+import { allDetails, detailBySlug, getDetailNeighbors } from "../data";
 import MediaPreview from "../media-preview";
 
 type DetailPageProps = {
@@ -12,7 +12,7 @@ const RIGHTS_NOTICE =
   "除了简历可以下载转发，此网站任何资料、视频、文章以及任何形式的文件版权（包括简历版权）均归 Xuecong Zhou 所有。禁止盗取、借鉴创意、转发、修改、使用、发表或商用。如有任何违规，将依法追究法律责任。";
 
 export function generateStaticParams() {
-  return details.map(({ slug }) => ({ slug }));
+  return allDetails.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: DetailPageProps): Promise<Metadata> {
@@ -37,9 +37,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
     notFound();
   }
 
-  const detailIndex = details.findIndex((item) => item.slug === detail.slug);
-  const previous = details[(detailIndex - 1 + details.length) % details.length];
-  const next = details[(detailIndex + 1) % details.length];
+  const { previous, next } = getDetailNeighbors(detail);
 
   return (
     <main className={`detail-page detail-accent-${detail.accent}`}>

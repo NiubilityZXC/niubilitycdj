@@ -553,6 +553,28 @@ export const details: DetailEntry[] = [
         ],
       },
     ],
+    links: [
+      {
+        label: "物理模型平台",
+        href: "/details/physical-model-platform",
+        description: "自由程预测、脉冲电容评估与 Z-pinch 推理",
+      },
+      {
+        label: "Rosseland 自由程计算",
+        href: "/details/rosseland-computing",
+        description: "使用 AI 编写异构计算程序，最高加速 199.96 倍",
+      },
+      {
+        label: "AI 研发与交付平台",
+        href: "/details/ai-development-platform",
+        description: "企业代码仓库、AI 代码审查与 CI/CD",
+      },
+      {
+        label: "微信公众号自动运营",
+        href: "/details/wechat-automation",
+        description: "素材整理、内容生成、排版与发布流程管理",
+      },
+    ],
   },
   {
     slug: "erp-internship",
@@ -624,4 +646,173 @@ export const details: DetailEntry[] = [
   },
 ];
 
-export const detailBySlug = new Map(details.map((detail) => [detail.slug, detail]));
+export const additionalDetails: DetailEntry[] = [
+  {
+    slug: "physical-model-platform",
+    number: "09",
+    category: "项目经历",
+    title: "物理模型平台",
+    subtitle: "安东聚变（太仓）科技有限公司 · AI 赋能专员",
+    period: "2025 年 9 月至今 · 任职期间",
+    location: "中国江苏苏州",
+    summary: "集自由程预测、脉冲电容评估和 Z-pinch 推理于一体，并将自由程模型接入 FLASH 程序。",
+    tags: ["KDTree", "岭回归", "FLASH", "Z-pinch", "自由程预测", "脉冲电容"],
+    accent: "teal",
+    sections: [
+      {
+        title: "自由程预测与 FLASH 集成",
+        bullets: [
+          "自由程采用 KDTree 近邻加权岭多项式回归。",
+          "自由程模型已接入 FLASH 程序，可在自由程表查不到数据时直接调用模型预测。",
+        ],
+      },
+      {
+        title: "脉冲电容状态评估",
+        paragraphs: ["通过滑动窗口提取波形上包络、中位数、众数及历史周期，进行脉冲电容状态预测。"],
+      },
+      {
+        title: "Z-pinch 推理",
+        paragraphs: ["Z-pinch 采用四阶多项式岭回归与物理速度约束，完成速度预测。"],
+      },
+      {
+        title: "模型结果",
+        bullets: [
+          "自由程预测 SMAPE：3.17%。",
+          "脉冲电容测试 NMAE：10.68%。",
+          "Z-pinch 速度预测 MAPE：0.00155%。",
+        ],
+      },
+    ],
+    links: [
+      {
+        label: "free-path-service-portable",
+        href: "https://github.com/NiubilityZXC/free-path-service-portable",
+        description: "简历中的物理模型平台 GitHub 链接",
+      },
+      {
+        label: "AI 赋能专员",
+        href: "/details/ai-enablement-specialist",
+        description: "安东聚变工作经历",
+      },
+    ],
+  },
+  {
+    slug: "rosseland-computing",
+    number: "10",
+    category: "项目经历",
+    title: "Rosseland 自由程计算",
+    subtitle: "安东聚变（太仓）科技有限公司 · AI 赋能专员",
+    period: "2025 年 9 月至今 · 任职期间",
+    location: "中国江苏苏州",
+    summary: "使用 AI 编写 Rosseland 异构自由程计算程序，结果与原版一致，最高加速 199.96 倍。",
+    tags: ["Rosseland", "AI 编程", "异构计算", "自由程", "199.96 倍"],
+    accent: "coral",
+    sections: [
+      {
+        title: "计算程序开发",
+        paragraphs: ["使用 AI 编写 Rosseland 异构自由程计算程序。"],
+      },
+      {
+        title: "一致性与性能",
+        bullets: ["计算结果与原版一致。", "最高加速达到 199.96 倍。"],
+      },
+    ],
+    links: [
+      {
+        label: "AI 赋能专员",
+        href: "/details/ai-enablement-specialist",
+        description: "安东聚变工作经历",
+      },
+    ],
+  },
+  {
+    slug: "ai-development-platform",
+    number: "11",
+    category: "项目经历",
+    title: "AI 研发与交付平台",
+    subtitle: "安东聚变（太仓）科技有限公司 · AI 赋能专员",
+    period: "2025 年 9 月至今 · 任职期间",
+    location: "中国江苏苏州",
+    summary: "搭建企业内部代码仓库与 CI/CD 系统，开发由 Agent 驱动的代码审查、优化与提交流程。",
+    tags: ["Agent", "CI/CD", "代码审查", "版本管理", "自动构建", "持续交付"],
+    accent: "blue",
+    sections: [
+      {
+        title: "企业研发平台",
+        bullets: [
+          "搭建企业内部代码仓库及 CI/CD 持续集成与持续交付系统。",
+          "实现代码版本管理、自动构建、测试、部署及发布流程。",
+        ],
+      },
+      {
+        title: "AI 自动代码审查",
+        bullets: [
+          "使 Agent 能够自动分析代码变更、识别潜在缺陷并提出修改建议。",
+          "由 Agent 完成代码优化，并通过测试和审查。",
+        ],
+      },
+      {
+        title: "自动提交与交付",
+        paragraphs: ["在通过测试和审查后，自动提交至代码仓库并触发 CI/CD 流程。"],
+      },
+    ],
+    links: [
+      {
+        label: "AI 赋能专员",
+        href: "/details/ai-enablement-specialist",
+        description: "安东聚变工作经历",
+      },
+    ],
+  },
+  {
+    slug: "wechat-automation",
+    number: "12",
+    category: "项目经历",
+    title: "微信公众号自动运营",
+    subtitle: "安东聚变（太仓）科技有限公司 · AI 赋能专员",
+    period: "2025 年 9 月至今 · 任职期间",
+    location: "中国江苏苏州",
+    summary: "开发微信公众号自动运营 Skill，串联素材整理、内容生成与润色、排版适配及发布流程管理。",
+    tags: ["Skill", "微信公众号", "内容生成", "排版适配", "发布流程", "自动化"],
+    accent: "yellow",
+    sections: [
+      {
+        title: "内容生产",
+        bullets: ["整理文章素材。", "实现内容生成与润色。"],
+      },
+      {
+        title: "排版与发布",
+        bullets: ["实现排版适配与发布流程管理。", "自动化处理运营内容。"],
+      },
+      {
+        title: "日常运营",
+        paragraphs: ["通过微信公众号自动运营 Skill，提升公众号内容生产与日常维护效率。"],
+      },
+    ],
+    links: [
+      {
+        label: "wx-gongzhonghao",
+        href: "https://github.com/NiubilityZXC/wx-gongzhonghao",
+        description: "简历中的微信公众号自动运营 GitHub 链接",
+      },
+      {
+        label: "AI 赋能专员",
+        href: "/details/ai-enablement-specialist",
+        description: "安东聚变工作经历",
+      },
+    ],
+  },
+];
+
+export const allDetails = [...details, ...additionalDetails];
+export const detailBySlug = new Map(allDetails.map((detail) => [detail.slug, detail]));
+
+// Keep the original pages' previous/next destinations unchanged as projects grow.
+export function getDetailNeighbors(detail: DetailEntry) {
+  const group = details.includes(detail) ? details : additionalDetails;
+  const index = group.indexOf(detail);
+  return {
+    previous: group[(index - 1 + group.length) % group.length],
+    next: group[(index + 1) % group.length],
+  };
+}

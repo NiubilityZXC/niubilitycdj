@@ -13,7 +13,7 @@ const transpiledDetails = ts.transpileModule(detailsSource, {
   },
 }).outputText;
 const detailsModuleUrl = `data:text/javascript;base64,${Buffer.from(transpiledDetails).toString("base64")}`;
-const { details } = await import(detailsModuleUrl);
+const { allDetails: details, getDetailNeighbors } = await import(detailsModuleUrl);
 
 const escapeHtml = (value) =>
   String(value)
@@ -58,7 +58,7 @@ const renderLinks = (links) => {
           ${links
             .map(
               (link) => `
-            <a href="${escapeHtml(link.href)}" target="_blank" rel="noreferrer">
+            <a href="${escapeHtml(link.href.replace(/^\/details\/([^/]+)\/?$/, "../$1/"))}" target="_blank" rel="noreferrer">
               <span><strong>${escapeHtml(link.label)}</strong><small>${escapeHtml(link.description)}</small></span>
               <i aria-hidden="true">↗</i>
             </a>`,
@@ -91,9 +91,8 @@ const renderMediaGroups = (groups) => {
     .join("\n");
 };
 
-const renderPage = (detail, index) => {
-  const previous = details[(index - 1 + details.length) % details.length];
-  const next = details[(index + 1) % details.length];
+const renderPage = (detail) => {
+  const { previous, next } = getDetailNeighbors(detail);
   const repeatedTags = [
     ...detail.tags,
     RIGHTS_NOTICE,
@@ -177,10 +176,10 @@ const staticStyles = `@font-face {
 ${appStyles}`;
 writeFileSync(join(detailsRoot, "styles.css"), staticStyles, "utf8");
 
-details.forEach((detail, index) => {
+details.forEach((detail) => {
   const targetDir = join(detailsRoot, detail.slug);
   mkdirSync(targetDir, { recursive: true });
-  writeFileSync(join(targetDir, "index.html"), renderPage(detail, index), "utf8");
+  writeFileSync(join(targetDir, "index.html"), renderPage(detail), "utf8");
 });
 
 console.log(`Generated ${details.length} static detail pages in ${pathToFileURL(detailsRoot).href}`);
